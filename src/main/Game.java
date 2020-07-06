@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import entities.Entity;
 import entities.Player;
 import graficos.Spritesheet;
+import world.World;
 
 public class Game extends Canvas implements Runnable, KeyListener {
 
@@ -26,16 +27,23 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static JFrame frame;
 	private Thread thread;
 	private boolean isRunning = true;
-	private final int WIDTH = 240;
-	private final int HEIGHT = 160;
+	public final static int WIDTH = 240;
+	public final static int HEIGHT = 135;
 	private final int SCALE =5;
 
 	private BufferedImage image;
 	
-	public List<Entity> entities; 
-	public static Spritesheet spritesheet;
+	public static List<Entity> entities; 
 	
-	private Player player;
+	//Sprites
+	public static Spritesheet playerSprite;
+	public static Spritesheet itemsSprite;
+	public static Spritesheet worldSprite;
+	
+	
+	public static World world;
+	
+	public static Player player;
 	
 	public Game() {
 		addKeyListener(this);
@@ -45,14 +53,21 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		//Inicializando objetos
 		image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
-		spritesheet = new Spritesheet("/player.png");
 		
-		player = new Player(0,0,16,16,spritesheet.getSprite(0, 0, 16,16));
+		playerSprite = new Spritesheet("/player.png"); //player
+		itemsSprite = new Spritesheet("/itens.png"); //itens
+		worldSprite = new Spritesheet("/ch„o.png"); //ch„o
+		
+		//Player
+		player = new Player(0,0,16,16,playerSprite.getSprite(0, 0, 16,16));
 		entities.add(player);
+		
+		world = new World("/map.png"); //inicializando a classe de desenhar mundo
+		
 		}
 	
 	public void initFrame(){
-		frame = new JFrame("Rushing Dangeon");
+		frame = new JFrame("Jogin");
 		frame.add(this);
 		frame.setResizable(false);
 		frame.pack();
@@ -99,11 +114,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			return;
 		}
 		Graphics g = image.getGraphics();
-		g.setColor(new Color(250,250,250));
+		g.setColor(new Color(0,0,0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		/*Renderiza√ß√£o do Jogo*/
 		//Graphics2D g2= (Graphics2D) g;
+		
+		world.render(g);
+		
 		for(int i = 0; i< entities.size();i++) {
 			Entity e = entities.get(i);
 			e.render(g);
