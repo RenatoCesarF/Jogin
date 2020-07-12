@@ -27,9 +27,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static JFrame frame;
 	private Thread thread;
 	private boolean isRunning = true;
-	public final static int WIDTH = 240;
-	public final static int HEIGHT = 135;
-	private final int SCALE =5;
+	public static final int WIDTH = 240;
+	public static final int HEIGHT = 160;
+	private final int SCALE = 4;
 
 	private BufferedImage image;
 	
@@ -54,9 +54,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		
-		playerSprite = new Spritesheet("/player.png"); //player
 		itemsSprite = new Spritesheet("/itens.png"); //itens
 		worldSprite = new Spritesheet("/ch„o.png"); //ch„o
+		playerSprite = new Spritesheet("/player.png"); //player
 		
 		//Player
 		player = new Player(0,0,16,16,playerSprite.getSprite(0, 0, 16,16));
@@ -117,15 +117,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.setColor(new Color(0,0,0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		/*Renderiza√ß√£o do Jogo*/
-		//Graphics2D g2= (Graphics2D) g;
-		
 		world.render(g);
+
+		
 		
 		for(int i = 0; i< entities.size();i++) {
 			Entity e = entities.get(i);
 			e.render(g);
+		
 		}
+		
 		/***/
 		g.dispose();
 		g = bs.getDrawGraphics();
@@ -147,8 +148,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			lastTime = now;
 			
 			if(delta >= 1) {
-				tick();
 				render();
+				tick();
 				frames++;
 				delta--;
 			}

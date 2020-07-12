@@ -1,10 +1,11 @@
-package entities;
+ package entities;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import main.Game;
 import world.Camera;
+import world.World;
 
 public class Player extends Entity{
 
@@ -53,17 +54,18 @@ public class Player extends Entity{
 	
 	public void tick(){
 		movedHorizontal = false;
-		if(up) {
+		if(up && World.isFree(this.getX(), (int)(y-speed))){
 			y -= speed;
 		}
-		else if(down){
+		else if(down && World.isFree(this.getX(), (int)(y + speed))){
+			
 			y += speed;
 		}
-		if(right) {
+		if(right && World.isFree((int)(x + speed), this.getY())) {
 			movedHorizontal = true;
 			x += speed;
 		}
-		else if(left){
+		else if(left && World.isFree((int)(x - speed), this.getY())){
 			movedHorizontal = true;
 			x -= speed;
 		}
@@ -90,9 +92,11 @@ public class Player extends Entity{
 				}
 			}
 		}
+		
 		//Sistema de camera que segue o jogador
-		Camera.x =  this.getX() - (Game.WIDTH/2);
-		Camera.y =  this.getY() - (Game.HEIGHT/2);
+		Camera.x =  Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH * 16 - Game.WIDTH);
+		Camera.y =  Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT * 16 - Game.HEIGHT);
+
 	}
 	public void render(Graphics g) {
 		if(right) {
@@ -109,7 +113,7 @@ public class Player extends Entity{
 		}
 		
 		else {
-			g.drawImage(playerStatic[1], this.getX() - Camera.x,this.getY() - Camera.y,null);
+			g.drawImage(playerStatic[1], this.getX() - Camera.x, this.getY() - Camera.y,null);
 		}
 	}
 }
