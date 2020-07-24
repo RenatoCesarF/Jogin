@@ -31,6 +31,7 @@ public class Entity {
 		this.width = width;
 		this.height = height;
 		this.sprite = sprite;
+		
 	}
 	
 
@@ -54,6 +55,7 @@ public class Entity {
 	public int getHeight() {
 		return this.height;
 	}
+	
 	public void tick() {
 		
 	}

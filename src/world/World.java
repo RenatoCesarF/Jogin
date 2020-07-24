@@ -8,9 +8,9 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import entities.Enemy;
-import entities.Entity;
 import entities.Weapon;
 import main.Game;
+import world.FloorTile;
 
 public class World {
 	
@@ -33,13 +33,12 @@ public class World {
 				for(int yy = 0; yy< map.getHeight(); yy++) {
 					int pixelAtual = pixels[xx +(yy * map.getWidth())];
 					
-					Random randomFloor = new Random();
-					int floorIndex = randomFloor.nextInt(39);
-					tiles[xx + (yy * WIDTH)] = new FloorTile(xx*16, yy*16, FloorTile.floors[floorIndex]);
+					
+					tiles[xx + (yy * WIDTH)] = new FloorTile(xx*16, yy*16, FloorTile.randomFloor());
 					
 					if(pixelAtual == 0xFF000000) {
 						//floor
-						tiles[xx + (yy * WIDTH)] = new FloorTile(xx*16, yy*16, FloorTile.floors[floorIndex]);
+						tiles[xx + (yy * WIDTH)] = new FloorTile(xx*16, yy*16, FloorTile.randomFloor());
 	 
 					}
 					else if (pixelAtual == 0xFFFFFFFF){
@@ -75,7 +74,7 @@ public class World {
 	
 	public static boolean isFree(int xNext, int yNext) {
 		int x1 = xNext / TILE_SIZE;
-		int y1 = yNext / TILE_SIZE;
+		int y1 = yNext / TILE_SIZE ;
 		
 		int x2 = (xNext + TILE_SIZE-1) / TILE_SIZE;
 		int y2 = yNext / TILE_SIZE;

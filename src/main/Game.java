@@ -58,8 +58,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		worldSprite = new Spritesheet("/chão.png"); //chão
 		playerSprite = new Spritesheet("/player.png"); //player
 		
-		//Player
-		player = new Player(0,0,16,16,playerSprite.getSprite(0, 0, 16,16));
+		//Player               16 16
+		player = new Player(0,0,1,1,playerSprite.getSprite(0, 0,1,13));
 		entities.add(player);
 		
 		world = new World("/map.png"); //inicializando a classe de desenhar mundo
@@ -95,6 +95,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static void main(String args[]) {
 		Game game = new Game(); 
 		game.start();
+
 		
 	}
 	

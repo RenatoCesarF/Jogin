@@ -31,20 +31,20 @@ public class Player extends Entity{
 		playerStatic = new BufferedImage[2];
 		
 		//sprite player static
-		for(int i = 0; i < 2; i++) {			
-			playerStatic[i] = Game.playerSprite.getSprite(0+(i*16), 0, 16, 16);
+		for(int i = 0; i < 2; i++) {			          //frame,start, largura, algura 
+			playerStatic[i] = Game.playerSprite.getSprite(0+(i*16), 0, 16, 16);//0
 		}
 		//sprite player moving for right
 		for(int i = 0; i < 8; i++) {			
-			playerRight[i] = Game.playerSprite.getSprite(0+(i*16), 48, 16, 16);
+			playerRight[i] = Game.playerSprite.getSprite(0+(i*16), 48, 16, 16);//48
 		}
 		//sprite player moving for left
 		for(int i = 0; i <8; i++) {
-			playerLeft[i] = Game.playerSprite.getSprite(0+(i*16), 64, 16, 16);
+			playerLeft[i] = Game.playerSprite.getSprite(0+(i*16), 64, 16, 16);//64
 		}
 		//sprite player moving for up
 		for(int i = 0; i < 4; i++) {
-			playerUp[i] = Game.playerSprite.getSprite(0+(i*16),32, 16, 16);
+			playerUp[i] = Game.playerSprite.getSprite(0+(i*16), 32, 16, 16);// 32
 		}
 		//sprite player moving down
 		for(int i = 0; i < 4; i++) {
@@ -57,15 +57,15 @@ public class Player extends Entity{
 		if(up && World.isFree(this.getX(), (int)(y-speed))){
 			y -= speed;
 		}
-		else if(down && World.isFree(this.getX(), (int)(y + speed))){
+		else if(down && World.isFree(this.getX() , (int)(y + speed))){
 			
 			y += speed;
 		}
-		if(right && World.isFree((int)(x + speed), this.getY())) {
+		if(right && World.isFree((int)(x + speed ), this.getY())) {
 			movedHorizontal = true;
 			x += speed;
 		}
-		else if(left && World.isFree((int)(x - speed), this.getY())){
+		else if(left && World.isFree((int)(x - speed ), this.getY())){
 			movedHorizontal = true;
 			x -= speed;
 		}
