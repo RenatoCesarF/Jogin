@@ -52,16 +52,11 @@ public class World {
 					}
 					else if(pixelAtual == 0xFFff00ea) {
 						//Items
-						Random randomItem = new Random();
-						int itemIndex = randomItem.nextInt(5);
-						Game.entities.add(new Weapon(xx*16, yy* 16, 16,16, Weapon.itens[itemIndex]));
+						Game.entities.add(new Weapon(xx*16, yy* 16, 16,16, Weapon.randomItem()));
 					}
 					else if(pixelAtual == 0xFF00ff05){
 						//Weapons
-						//escolher aleatóriamente:
-						Random randomWeapon = new Random();
-						int weaponIndex = randomWeapon.nextInt(8);
-						Game.entities.add(new Weapon(xx*16, yy*16, 16,16, Weapon.weapons[weaponIndex]));
+						Game.entities.add(new Weapon(xx*16, yy*16, 16,16, Weapon.randomWeapon()));
 					} 
 				}
 				

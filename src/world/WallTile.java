@@ -11,11 +11,11 @@ public class WallTile extends Tile {
 		Random random = new Random();
 		int randomWall = random.nextInt(100);
 		
-		if(randomWall > 80 && randomWall < 100) return TileWall1;
-		if(randomWall > 60 && randomWall < 80) return TileWall2;
-		if(randomWall > 40 && randomWall < 60) return TileWall3;
+		if(randomWall > 80 && randomWall < 100) return TileWall1;//havean
+		if(randomWall > 40 && randomWall < 60) return TileWall3; //Tree
+		if(randomWall == 80) return TileWall2; //Hole
 		
-		else return TileWall0;
+		else return TileWall0; //wood
 	}
 	
 	public static BufferedImage TileWall0 = Game.worldSprite.getSprite(0*16, 16, 16, 16);
