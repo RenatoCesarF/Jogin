@@ -37,12 +37,12 @@ public class Weapon extends Entity{
 	//Random Itens
 	public static BufferedImage randomItem() {
 		Random randomItem = new Random();
-		int itemIndex = randomItem.nextInt(5);
+		int itemIndex = randomItem.nextInt(4);
 		
-		if(itemIndex == 1) return medKit;
-		if(itemIndex == 2) return bullets;
-		if(itemIndex == 3) return shild;
-		if(itemIndex == 4) return manapot;
+		if(itemIndex == 0) return medKit;
+		if(itemIndex == 1) return bullets;
+		if(itemIndex == 2) return shild;
+		if(itemIndex == 3) return manapot;
 		
 		else return medKit;
 	}

@@ -2,7 +2,7 @@ package world;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import main.Game;
+
 
 public class Tile {
 	

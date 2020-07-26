@@ -3,14 +3,12 @@ package world;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import entities.Enemy;
 import entities.Weapon;
 import main.Game;
-import world.FloorTile;
+
 
 public class World {
 	
