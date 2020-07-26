@@ -12,9 +12,10 @@ public class Player extends Entity{
 	public boolean right, up, left, down;
 	public double speed = 0.9;
 	
-	private int frames = 0,maxFrames = 5, indexHorizontal, indexVertical;
+	private int frames = 0,maxFrames = 4, indexHorizontal, indexVertical;
 	private int maxIndexHorizontal = 8, maxIndexVertical = 4;
 	private boolean movedHorizontal = false;
+	
 	private BufferedImage[] playerRight;
 	private BufferedImage[] playerLeft;
 	private BufferedImage[] playerUp;

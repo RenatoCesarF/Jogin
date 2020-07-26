@@ -18,8 +18,8 @@ public class FloorTile extends Tile {
 		//Normal Dirty 
 		if(floorIndex > 0 && floorIndex < 200 ) return TileFloor1;
 		if(floorIndex > 200 && floorIndex < 400) return TileFloor2;
-		if(floorIndex < 400 && floorIndex > 600) return TileFloor3;
-		if(floorIndex < 600 && floorIndex > 800) return TileFloor4;
+		if(floorIndex > 600 && floorIndex < 400) return TileFloor3;
+		if(floorIndex > 800 && floorIndex < 600) return TileFloor4;
 		
 		
 		if(floorIndex > 800 && floorIndex < 810) return TileFloor5; //little grass
@@ -31,8 +31,13 @@ public class FloorTile extends Tile {
 		if(floorIndex > 860 && floorIndex < 870) return TileFloor11; //skul
 		if(floorIndex > 870 && floorIndex < 880) return TileFloor12; //2 rocks	
 		if(floorIndex > 880 && floorIndex < 890) return TileFloor13; //crack with a lag
-		if(floorIndex == 900) return TileFloor14; //shild stuck undergrond
-	
+		
+		//less prob
+		if(floorIndex == 891) return TileFloor14; //shild stuck undergrond
+		if(floorIndex == 892) return TileFloor15; //arms
+		if(floorIndex == 893) return TileFloor16; //papers
+		
+		
 		else return TileFloor0;
 
 		
@@ -53,5 +58,7 @@ public class FloorTile extends Tile {
 	public static BufferedImage TileFloor12 = Game.worldSprite.getSprite(16*12, 0, 16, 16);
 	public static BufferedImage TileFloor13 = Game.worldSprite.getSprite(16*13, 0, 16, 16);
 	public static BufferedImage TileFloor14 = Game.worldSprite.getSprite(16*14, 0, 16, 16);
+	public static BufferedImage TileFloor15 = Game.worldSprite.getSprite(16*15, 0, 16, 16);
+	public static BufferedImage TileFloor16 = Game.worldSprite.getSprite(16*16, 0, 16, 16);
 	
 }

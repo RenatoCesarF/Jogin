@@ -43,7 +43,7 @@ public class World {
 					}
 					else if (pixelAtual == 0xFFFFFFFF){
 						//wall
-						tiles[xx + (yy * WIDTH)] = new WallTile(xx*16, yy*16, WallTile.TileWall );
+						tiles[xx + (yy * WIDTH)] = new WallTile(xx*16, yy*16, WallTile.randomWall());
 					}
 					else if(pixelAtual == 0XFF0008ff) {
 						//player
@@ -52,14 +52,16 @@ public class World {
 					}
 					else if(pixelAtual == 0xFFff00ea) {
 						//Items
-						Game.entities.add(new Enemy(xx*16, yy* 16, 16,16, Weapon.armor3_en));
+						Random randomItem = new Random();
+						int itemIndex = randomItem.nextInt(5);
+						Game.entities.add(new Weapon(xx*16, yy* 16, 16,16, Weapon.itens[itemIndex]));
 					}
 					else if(pixelAtual == 0xFF00ff05){
 						//Weapons
 						//escolher aleatóriamente:
-						Random randomItem = new Random();
-						int itemIndex = randomItem.nextInt(6);
-						Game.entities.add(new Weapon(xx*16, yy*16, 16,16, Weapon.weapons[itemIndex]));
+						Random randomWeapon = new Random();
+						int weaponIndex = randomWeapon.nextInt(8);
+						Game.entities.add(new Weapon(xx*16, yy*16, 16,16, Weapon.weapons[weaponIndex]));
 					} 
 				}
 				
