@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import entities.Enemy;
 import entities.Weapon;
 import main.Game;
 
@@ -55,7 +56,13 @@ public class World {
 					else if(pixelAtual == 0xFF00ff05){
 						//Weapons
 						Game.entities.add(new Weapon(xx*16, yy*16, 16,16, Weapon.randomWeapon()));
-					} 
+					}
+					else if(pixelAtual == 0XFFFF0000) {
+						//Enemy
+						Enemy en = new Enemy(xx*16, yy*16,16,16, Enemy.robot);
+						Game.entities.add(en);
+						Game.enemies.add(en);
+					}
 				}
 				
 			}
@@ -67,23 +74,23 @@ public class World {
 		
 	}
 	
-	public static boolean isFree(int xNext, int yNext) {
-		int x1 = xNext / TILE_SIZE;
-		int y1 = yNext / TILE_SIZE ;
+	public static boolean isFree(double d, int yNext) {
+		double x1 = d / TILE_SIZE;
+		double y1 = yNext / TILE_SIZE ;
 		
-		int x2 = (xNext + TILE_SIZE-1) / TILE_SIZE;
-		int y2 = yNext / TILE_SIZE;
+		double x2 = (d + TILE_SIZE-1) / TILE_SIZE;
+		double y2 = yNext / TILE_SIZE;
 		
-		int x3 = xNext / TILE_SIZE;
-		int y3 = (yNext + TILE_SIZE-1) / TILE_SIZE;
+		double x3 = d / TILE_SIZE;
+		double y3 = (yNext + TILE_SIZE-1) / TILE_SIZE;
 		
-		int x4 = (xNext + TILE_SIZE-1) / TILE_SIZE;
-		int y4 = (yNext + TILE_SIZE-1) / TILE_SIZE;
+		double x4 = (d + TILE_SIZE-1) / TILE_SIZE;
+		double y4 = (yNext + TILE_SIZE-1) / TILE_SIZE;
 		
-		return !((tiles[x1 + (y1 * World.WIDTH)] instanceof WallTile)||
-				(tiles[x2 + (y2 * World.WIDTH)] instanceof WallTile) ||
-				(tiles[x3 + (y3 * World.WIDTH)] instanceof WallTile) ||
-				(tiles[x4 + (y4 * World.WIDTH)] instanceof WallTile));
+		return !((tiles[(int) (x1 + (y1 * World.WIDTH))] instanceof WallTile)||
+				(tiles[(int) (x2 + (y2 * World.WIDTH))] instanceof WallTile) ||
+				(tiles[(int) (x3 + (y3 * World.WIDTH))] instanceof WallTile) ||
+				(tiles[(int) (x4 + (y4 * World.WIDTH))] instanceof WallTile));
 	}
 	public void render(Graphics g) {
 		int xstart = Camera.x >> 4;

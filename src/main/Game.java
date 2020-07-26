@@ -11,9 +11,11 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
+import entities.Enemy;
 import entities.Entity;
 import entities.Player;
 import graficos.Spritesheet;
@@ -32,6 +34,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private BufferedImage image;
 	
 	public static List<Entity> entities; 
+	public static List<Enemy> enemies ; 
 	
 	//Sprites
 	public static Spritesheet playerSprite;
@@ -43,7 +46,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	
 	public static Player player;
 	
+	public static Random rand; 
+	
 	public Game() {
+		
+		rand = new Random();
+		
 		addKeyListener(this);
 		setPreferredSize( new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
@@ -51,9 +59,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		//Inicializando objetos
 		image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
+		enemies = new ArrayList<Enemy>();
 		
 		itemsSprite = new Spritesheet("/itens.png"); //itens
-		worldSprite = new Spritesheet("/chão.png"); //chão
+		worldSprite = new Spritesheet("/tiles.png"); //tiles
 		playerSprite = new Spritesheet("/player.png"); //player
 		
 		//Player               16 16
@@ -141,6 +150,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		double delta = 0;
 		int frames = 0;
 		double timer = System.currentTimeMillis();
+		requestFocus();
 		while(isRunning ) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;

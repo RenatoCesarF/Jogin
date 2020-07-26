@@ -3,7 +3,6 @@ package entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import main.Game;
 import world.Camera;
 
 
@@ -17,14 +16,7 @@ public class Entity {
 	
 	private BufferedImage sprite;
 	
-	//Itens
-	public static BufferedImage lifePack_en = Game.itemsSprite.getSprite(0, 16, 16, 16);
-	public static BufferedImage ammu_en = Game.itemsSprite.getSprite(16, 16, 16, 16);
-	public static BufferedImage energy_en = Game.itemsSprite.getSprite(32, 16, 16, 16);
-	public static BufferedImage shild_en= Game.itemsSprite.getSprite(48, 16, 16, 16);
-	public static BufferedImage mana_en = Game.itemsSprite.getSprite(64, 16, 16, 16);
 	
-
 	public Entity(int x, int y, int width, int height, BufferedImage sprite) {
 		this.x = x;
 		this.y = y;
