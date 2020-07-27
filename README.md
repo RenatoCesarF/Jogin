@@ -34,14 +34,14 @@ I was inspired in many games that i like
 The color pallet: endesga-32
 
 
-### 🌌💾Some interesting things💾🌌
+### 🌌Some interesting things
 - All the floor, and future all the map, are genereted randomly
 - ...
 
 
-### 🔮Future implementations🔮 ...
+### 🔮Future implementations ...
 
-### 🖥️Let's see some print🖥️
+### 🖥️Let's see some prints
 
 ![print](https://user-images.githubusercontent.com/62253156/88493724-adfca280-cf80-11ea-8728-e812ace797e1.png)
 
