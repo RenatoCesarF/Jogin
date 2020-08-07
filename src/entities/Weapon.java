@@ -37,16 +37,17 @@ public class Weapon extends Entity{
 	//Random Itens
 	public static BufferedImage randomItem() {
 		Random randomItem = new Random();
-		int itemIndex = randomItem.nextInt(4);
+		int itemIndex = randomItem.nextInt(5);
 		
 		if(itemIndex == 0) return medKit;
 		if(itemIndex == 1) return bullets;
 		if(itemIndex == 2) return shild;
 		if(itemIndex == 3) return manapot;
+		if(itemIndex == 4) return energy;
 		
 		else return medKit;
 	}
-	
+	//upload to the game the sprites of itens
 	public static BufferedImage medKit = Game.itemsSprite.getSprite(16*0, 16, 16, 16);
 	public static BufferedImage bullets = Game.itemsSprite.getSprite(16*1, 16, 16, 16);
 	public static BufferedImage energy = Game.itemsSprite.getSprite(16*2, 16, 16, 16);
