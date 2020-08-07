@@ -8,13 +8,16 @@ import world.Camera;
 import world.World;
 
 public class Player extends Entity{
-
+	
 	public boolean right, up, left, down;
 	public double speed = 0.9;
 	
 	private int frames = 0,maxFrames = 4, indexHorizontal, indexVertical;
 	private int maxIndexHorizontal = 8, maxIndexVertical = 4;
 	private boolean movedHorizontal = false;
+	
+	private int life = 10;
+	private int colidingArea = 16;
 	
 	private BufferedImage[] playerRight;
 	private BufferedImage[] playerLeft;
@@ -51,6 +54,29 @@ public class Player extends Entity{
 		for(int i = 0; i < 4; i++) {
 			playerDown[i] = Game.playerSprite.getSprite(0+(i*16), 16, 16, 16);
 		}
+	}
+	
+	public void loseLife(int damage) {
+		this.life -= damage;
+		System.out.println("new life: " + this.life);
+		immunity();
+		
+		//invunerability for 2 seconds
+		
+		if(this.life <= 0 ) {
+			playerDied();
+		}
+	}
+	
+	public int getColidingArea() {
+		return this.colidingArea;
+	}
+	public void immunity() {
+		this.colidingArea = 0;
+		
+	}
+	public void playerDied() {
+		System.exit(1);
 	}
 	
 	public void tick(){
