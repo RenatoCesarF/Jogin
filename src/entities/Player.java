@@ -2,6 +2,7 @@
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
 
 import main.Game;
 import world.Camera;
@@ -59,23 +60,40 @@ public class Player extends Entity{
 	public void loseLife(int damage) {
 		this.life -= damage;
 		System.out.println("new life: " + this.life);
+		
 		immunity();
 		
-		//invunerability for 2 seconds
 		
 		if(this.life <= 0 ) {
-			playerDied();
+			playderDied();
 		}
 	}
 	
 	public int getColidingArea() {
 		return this.colidingArea;
 	}
+	
 	public void immunity() {
-		this.colidingArea = 0;
+		Thread Teste = new Thread(new Runnable() {
+			public void run() {
+				Game.player.colidingArea = 0;
+				//system of colorize the player with white here
+				try {
+					Thread.sleep(2500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Game.player.colidingArea = 16;
+			}
+		});
+		
+		Teste.start();
+
 		
 	}
-	public void playerDied() {
+	
+	public void playderDied() {
 		System.exit(1);
 	}
 	
