@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
 
 import javax.swing.JFrame;
 
@@ -41,6 +42,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static Spritesheet itemsSprite;
 	public static Spritesheet worldSprite;
 	
+
 	
 	public static World world;
 	
@@ -57,6 +59,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		initFrame();
 		
 		//Inicializando objetos
+
+
 		image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
@@ -70,6 +74,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		entities.add(player);
 		
 		world = new World("/map.png"); //inicializando a classe de desenhar mundo
+		
+		
 		
 		}
 	
@@ -151,6 +157,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		int frames = 0;
 		double timer = System.currentTimeMillis();
 		requestFocus();
+		
 		while(isRunning ) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
