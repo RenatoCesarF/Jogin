@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
 
 import javax.swing.JFrame;
 
@@ -20,6 +19,7 @@ import entities.Enemy;
 import entities.Entity;
 import entities.Player;
 import graficos.Spritesheet;
+import graficos.UI;
 import world.World;
 
 public class Game extends Canvas implements Runnable, KeyListener {
@@ -41,6 +41,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static Spritesheet playerSprite;
 	public static Spritesheet itemsSprite;
 	public static Spritesheet worldSprite;
+	public static Spritesheet uiSprite;
 	
 
 	
@@ -49,6 +50,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static Player player;
 	
 	public static Random rand; 
+	
+	public UI ui; 
 	
 	public Game() {
 		
@@ -60,7 +63,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		//Inicializando objetos
 
-
+		ui = new UI();
+		
 		image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
@@ -68,6 +72,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		itemsSprite = new Spritesheet("/itens.png"); //itens
 		worldSprite = new Spritesheet("/tiles.png"); //tiles
 		playerSprite = new Spritesheet("/player.png"); //player
+		uiSprite = new Spritesheet("/UI.png");
 		
 		//Player               16 16
 		player = new Player(0,0,1,1,playerSprite.getSprite(0, 0,1,13));
@@ -140,6 +145,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			e.render(g);
 		
 		}
+		ui.render(g);
 		
 		/***/
 		g.dispose();
