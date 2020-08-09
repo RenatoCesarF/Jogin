@@ -2,7 +2,6 @@
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.Timer;
 
 import main.Game;
 import world.Camera;
@@ -17,7 +16,7 @@ public class Player extends Entity{
 	private int maxIndexHorizontal = 8, maxIndexVertical = 4;
 	private boolean movedHorizontal = false;
 	
-	private int life = 10;
+	public static double life = 10, maxLife = 10;
 	private int colidingArea = 16;
 	
 	private BufferedImage[] playerRight;

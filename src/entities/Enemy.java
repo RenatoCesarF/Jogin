@@ -64,7 +64,9 @@ public class Enemy extends Entity{
 			}
 		}else {
 			Game.player.loseLife(1);
+			
 		}
+		
 
 		frames ++;
 		if(frames == maxFrames) {
