@@ -57,13 +57,12 @@ public class Player extends Entity{
 	}
 	
 	public void loseLife(int damage) {
-		this.life -= damage;
+		Player.life -= damage;
 		System.out.println("new life: " + this.life);
 		
 		immunity();
 		
-		
-		if(this.life <= 0 ) {
+		if(Player.life <= 0 ) {
 			playderDied();
 		}
 	}

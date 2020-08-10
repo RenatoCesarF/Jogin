@@ -10,6 +10,10 @@ import main.Game;
 
 public class UI {
 	private BufferedImage[] energySymble;
+
+	private int animationIndex = 0, animationSpeed = 0;
+	
+
 	
 	public void render(Graphics g) {
 		/*============= Player Life ==========*/
@@ -27,10 +31,24 @@ public class UI {
 		g.drawString((int)Player.life+"/"+(int)Player.maxLife, 28, 15);
 		
 		//Energy Symble
-		energySymble = new BufferedImage[1];
-		energySymble[0] = Game.uiSprite.getSprite(0, 0, 16, 16);
-		g.drawImage(energySymble[0], 0, 4,null);
+		energySymble = new BufferedImage[4];
 		
+		for(int i = 0; i < energySymble.length;i ++) {
+			energySymble[i] = Game.uiSprite.getSprite(0+(16*i), 0, 16, 16);
+
+		}
+
+		g.drawImage(energySymble[animationIndex], 0, 4,null);
+
+		animationSpeed ++;
+		if(animationSpeed > 20) {
+			animationIndex ++;		
+			animationSpeed = 0;
+		}
+		
+		if(animationIndex >=4) {
+			animationIndex = 0;
+		}
 		
 	}
 }
