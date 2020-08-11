@@ -28,14 +28,13 @@ public class UI {
 		//String of lifes
 		g.setColor(new Color(58,68,102));
 		g.setFont(new Font("arial",Font.BOLD,8));
-		g.drawString((int)Player.life+"/"+(int)Player.maxLife, 28, 15);
+		g.drawString((int)Player.life+"/"+(int)Player.maxLife, 34, 15);
 		
 		//Energy Symble
 		energySymble = new BufferedImage[4];
 		
 		for(int i = 0; i < energySymble.length;i ++) {
 			energySymble[i] = Game.uiSprite.getSprite(0+(16*i), 0, 16, 16);
-
 		}
 
 		g.drawImage(energySymble[animationIndex], 0, 4,null);
@@ -49,6 +48,7 @@ public class UI {
 		if(animationIndex >=4) {
 			animationIndex = 0;
 		}
+		
 		
 	}
 }
