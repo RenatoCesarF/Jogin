@@ -16,7 +16,7 @@ public class Player extends Entity{
 	private int maxIndexHorizontal = 8, maxIndexVertical = 4;
 	private boolean movedHorizontal = false;
 	
-	public static double life = 10, maxLife = 10;
+	public static double life = 5, maxLife = 5;
 	private int colidingArea = 16;
 	
 	private BufferedImage[] playerRight;
@@ -58,7 +58,7 @@ public class Player extends Entity{
 	
 	public void loseLife(int damage) {
 		Player.life -= damage;
-		System.out.println("new life: " + this.life);
+		System.out.println("new life: " + Player.life);
 		
 		immunity();
 		
@@ -94,6 +94,8 @@ public class Player extends Entity{
 	public void playderDied() {
 		System.exit(1);
 	}
+
+	
 	
 	public void tick(){
 		movedHorizontal = false;
@@ -136,11 +138,38 @@ public class Player extends Entity{
 			}
 		}
 		
-		//Sistema de camera que segue o jogador
+		//Checking the collision
+		this.checkCollisionItem();
+		
+		//Camera Follow the player
 		Camera.x =  Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH * 16 - Game.WIDTH);
 		Camera.y =  Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT * 16 - Game.HEIGHT);
 
 	}
+	
+	public void checkCollisionItem() {
+		for(int i = 0; i < Game.energy.size(); i++) {
+			Entity singleEntity= Game.energy.get(i);
+
+			if(singleEntity instanceof Consumable) {
+
+				if(Entity.isColidding(this, singleEntity)) {
+					
+					if(Player.life < Player.maxLife) {
+						Game.energy.remove(singleEntity); 
+						Player.life +=1;
+					}
+					
+					
+
+
+
+					
+				}
+			}
+		}
+	}
+	
 	public void render(Graphics g) {
 		if(right) {
 			g.drawImage(playerRight[indexHorizontal],this.getX() - Camera.x,this.getY() - Camera.y,null);
