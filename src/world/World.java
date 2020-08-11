@@ -3,11 +3,12 @@ package world;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import entities.Enemy;
-import entities.Weapon;
+import entities.Consumable;
 import main.Game;
 
 
@@ -17,7 +18,7 @@ public class World {
 	public static int WIDTH,HEIGHT;
 	public static final int TILE_SIZE = 16;
 	
-	
+	public int itemIndex;
 	
 	public World(String path){
 		try {
@@ -34,7 +35,7 @@ public class World {
 					
 					
 					tiles[xx + (yy * WIDTH)] = new FloorTile(xx*16, yy*16, FloorTile.randomFloor());
-					
+					//TODO: change this "if's" to swich cases
 					if(pixelAtual == 0xFF000000) {
 						//floor
 						tiles[xx + (yy * WIDTH)] = new FloorTile(xx*16, yy*16, FloorTile.randomFloor());
@@ -51,12 +52,27 @@ public class World {
 					}
 					else if(pixelAtual == 0xFFff00ea) {
 						//Items
-						Game.entities.add(new Weapon(xx*16, yy* 16, 16,16, Weapon.randomItem()));
+						Random randomItem = new Random();
+						int itemIndex = randomItem.nextInt(5);
+						
+						Consumable Items = new Consumable(xx*16, yy* 16, 16,16, Consumable.randomItem(itemIndex));
+						
+						if ( itemIndex == 4) {
+							Game.energy.add(Items);							
+						}
+						
+						else Game.entities.add(Items);
+						//Items.setMask(3, 3, 10, 10);
+						
 					}
+					
 					else if(pixelAtual == 0xFF00ff05){
 						//Weapons
-						Game.entities.add(new Weapon(xx*16, yy*16, 16,16, Weapon.randomWeapon()));
+						Consumable Weapons = new Consumable(xx*16, yy*16, 16,16, Consumable.randomWeapon());
+						Weapons.setMask(3, 3, 10, 10);
+						Game.entities.add(Weapons);
 					}
+					
 					else if(pixelAtual == 0XFFFF0000) {
 						//Enemy
 						Enemy en = new Enemy(xx*16, yy*16,16,16, Enemy.robot);
@@ -92,6 +108,7 @@ public class World {
 				(tiles[(int) (x3 + (y3 * World.WIDTH))] instanceof WallTile) ||
 				(tiles[(int) (x4 + (y4 * World.WIDTH))] instanceof WallTile));
 	}
+	
 	public void render(Graphics g) {
 		int xstart = Camera.x >> 4;
 		int ystart = Camera.y >> 4;
