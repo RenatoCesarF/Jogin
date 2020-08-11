@@ -34,8 +34,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	private BufferedImage image;
 	
-	public static List<Entity> entities; 
-	public static List<Enemy> enemies ; 
+	public static List<Entity> entities;
+	public static List<Enemy> enemies; 
+	
+	//List of items
+	public static List<Entity> energy;
+	public static List<Entity> ammo;
+	public static List<Entity> mana;
+	
 	
 	//Sprites
 	public static Spritesheet playerSprite;
@@ -67,6 +73,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
+		energy = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
 		
 		itemsSprite = new Spritesheet("/itens.png"); //itens
@@ -75,14 +82,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		uiSprite = new Spritesheet("/UI.png");
 		
 		//Player               16 16
-		player = new Player(0,0,1,1,playerSprite.getSprite(0, 0,1,13));
+		player = new Player(0,0,1,1,playerSprite.getSprite(0, 0,16,16));
 		entities.add(player);
 		
 		world = new World("/map.png"); //inicializando a classe de desenhar mundo
 		
 		
 		
-		}
+	}
 	
 	public void initFrame(){
 		frame = new JFrame("Jogin");
@@ -121,7 +128,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public void tick(){
 		for(int i = 0; i< entities.size();i++) {
 			Entity e = entities.get(i);
-
+		
 			e.tick();
 		}
 	} 
@@ -139,12 +146,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		world.render(g);
 
 		
-		
 		for(int i = 0; i< entities.size();i++) {
 			Entity e = entities.get(i);
 			e.render(g);
 		
 		}
+		for(int i = 0; i< energy.size();i++) {
+			Entity e = energy.get(i);
+			e.render(g);
+		
+		}
+		
 		ui.render(g);
 		
 		/***/
