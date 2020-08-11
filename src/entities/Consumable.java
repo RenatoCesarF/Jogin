@@ -5,7 +5,7 @@ import java.util.Random;
 
 import main.Game;
 
-public class Weapon extends Entity{
+public class Consumable extends Entity{
 	
 	//Random Weapons
 	public static BufferedImage randomWeapon() {
@@ -34,30 +34,30 @@ public class Weapon extends Entity{
 	
 
 	
-	//Random Itens
-	public static BufferedImage randomItem() {
-		Random randomItem = new Random();
-		int itemIndex = randomItem.nextInt(5);
-		
+	//=============== Random Itens =============
+	
+	//upload to the game the sprites of itens
+	public static BufferedImage medKit = Game.itemsSprite.getSprite(16*0, 16, 16, 16);
+	public static BufferedImage bullets = Game.itemsSprite.getSprite(16*1, 16, 16, 16);
+	public static BufferedImage energy_C = Game.itemsSprite.getSprite(16*2, 16, 16, 16);
+	public static BufferedImage shild = Game.itemsSprite.getSprite(16*3, 16, 16, 16);
+	public static BufferedImage manapot = Game.itemsSprite.getSprite(16*4, 16, 16, 16);
+	
+
+
+	public static BufferedImage randomItem(int itemIndex) {
 		if(itemIndex == 0) return medKit;
 		if(itemIndex == 1) return bullets;
 		if(itemIndex == 2) return shild;
 		if(itemIndex == 3) return manapot;
-		if(itemIndex == 4) return energy;
+		if(itemIndex == 4) return energy_C;
 		
 		else return medKit;
 	}
-	//upload to the game the sprites of itens
-	public static BufferedImage medKit = Game.itemsSprite.getSprite(16*0, 16, 16, 16);
-	public static BufferedImage bullets = Game.itemsSprite.getSprite(16*1, 16, 16, 16);
-	public static BufferedImage energy = Game.itemsSprite.getSprite(16*2, 16, 16, 16);
-	public static BufferedImage shild = Game.itemsSprite.getSprite(16*3, 16, 16, 16);
-	public static BufferedImage manapot = Game.itemsSprite.getSprite(16*4, 16, 16, 16);
-	
-	
-	
-	public Weapon(int x, int y, int width, int height, BufferedImage sprite) {
+
+	public Consumable(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 	}
+	
 
 }
