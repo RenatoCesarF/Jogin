@@ -1,5 +1,6 @@
  package entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -9,10 +10,12 @@ import world.World;
 
 public class Player extends Entity{
 	
+	private int maskX = 3, maskY = 3, maskW = 10, maskH = 10;
+	
 	public boolean right, up, left, down;
 	public double speed = 0.9;
 	
-	private int frames = 0,maxFrames = 4, indexHorizontal, indexVertical;
+	private int frames = 0,maxFrames = 6, indexHorizontal, indexVertical;
 	private int maxIndexHorizontal = 8, maxIndexVertical = 4;
 	private boolean movedHorizontal = false;
 	
@@ -72,7 +75,7 @@ public class Player extends Entity{
 	}
 	
 	public void immunity() {
-		Thread Teste = new Thread(new Runnable() {
+		Thread immunityTime = new Thread(new Runnable() {
 			public void run() {
 				Game.player.colidingArea = 0;
 				//system of colorize the player with white here
@@ -86,7 +89,7 @@ public class Player extends Entity{
 			}
 		});
 		
-		Teste.start();
+		immunityTime.start();
 
 		
 	}
@@ -145,6 +148,8 @@ public class Player extends Entity{
 		Camera.x =  Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH * 16 - Game.WIDTH);
 		Camera.y =  Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT * 16 - Game.HEIGHT);
 
+		
+
 	}
 	
 	public void checkCollisionItem() {
@@ -159,11 +164,6 @@ public class Player extends Entity{
 						Game.energy.remove(singleEntity); 
 						Player.life +=1;
 					}
-					
-					
-
-
-
 					
 				}
 			}
@@ -187,5 +187,10 @@ public class Player extends Entity{
 		else {
 			g.drawImage(playerStatic[1], this.getX() - Camera.x, this.getY() - Camera.y,null);
 		}
+
+		
+		g.setColor(Color.blue);
+		g.fillRect(this.getX(),this.getY(),
+				16,16);
 	}
 }

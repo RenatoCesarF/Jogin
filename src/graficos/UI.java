@@ -19,7 +19,7 @@ public class UI {
 		/*============= Player Life ==========*/
 		//BackGound color
 		g.setColor(new Color(139,155,180));
-		g.fillRect(13, 8, 50, 8);
+		g.fillRect(13, 8, ((int)(Player.maxLife))+45, 8);
 		
 		//Life color
 		g.setColor(new Color(254, 174, 52));

@@ -1,5 +1,6 @@
 package entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -12,7 +13,7 @@ public class Enemy extends Entity{
 
 	private double speed = 0.5;
 	
-	private int maskX = 10, maskY = 10, maskW = 10, maskH = 10;
+	private int maskX = 3, maskY = 3, maskW = 10, maskH = 10;
 	
 	private int frames = 0,maxFrames = 4, index = 0, maxIndex = 3;
 	
@@ -88,6 +89,7 @@ public class Enemy extends Entity{
 				Game.player.getY(),
 				Game.player.getColidingArea(),
 				Game.player.getColidingArea());
+
 		
 		return enemyCurrent.intersects(player);
 	}
@@ -115,9 +117,9 @@ public class Enemy extends Entity{
 	public void render(Graphics g) {
 		g.drawImage(sprites[index], this.getX() - Camera.x ,this.getY() - Camera.y,null);
 		
-		/*test of the colision
+		//test of the colision
 		g.setColor(Color.blue);
 		g.fillRect(this.getX() + maskX - Camera.x, this.getY() + maskY - Camera.y, maskW, maskH);
-		 */
+		 
 	}
 }
