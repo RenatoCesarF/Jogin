@@ -4,6 +4,7 @@ package main;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -74,6 +75,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		energy = new ArrayList<Entity>();
+		ammo = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
 		
 		itemsSprite = new Spritesheet("/itens.png"); //itens
@@ -151,18 +153,27 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			e.render(g);
 		
 		}
+		//Rendering the energy sprite
 		for(int i = 0; i< energy.size();i++) {
 			Entity e = energy.get(i);
 			e.render(g);
-		
+		}
+		//Rendering the ammo sprite
+		for(int i = 0; i< ammo.size();i++) {
+			Entity e = ammo.get(i);
+			e.render(g);
 		}
 		
-		ui.render(g);
+		
 		
 		/***/
+		ui.symblosRender(g);
 		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
+		
+		ui.render(g);
+		
 		bs.show();
 		
 	}
