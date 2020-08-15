@@ -118,8 +118,8 @@ public class Enemy extends Entity{
 		g.drawImage(sprites[index], this.getX() - Camera.x ,this.getY() - Camera.y,null);
 		
 		//test of the colision
-		g.setColor(Color.blue);
-		g.fillRect(this.getX() + maskX - Camera.x, this.getY() + maskY - Camera.y, maskW, maskH);
+		//g.setColor(Color.blue);
+		//g.fillRect(this.getX() + maskX - Camera.x, this.getY() + maskY - Camera.y, maskW, maskH);
 		 
 	}
 }
