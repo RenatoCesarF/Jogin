@@ -55,13 +55,18 @@ public class World {
 						Random randomItem = new Random();
 						int itemIndex = randomItem.nextInt(5);
 						
-						Consumable Items = new Consumable(xx*16, yy* 16, 16,16, Consumable.randomItem(itemIndex));
-						
-						if ( itemIndex == 4) {
-							Game.energy.add(Items);							
+						Consumable items = new Consumable(xx*16, yy* 16, 16,16, Consumable.randomItem(itemIndex));
+
+						//Checking ammo
+						if(itemIndex == 1) {
+							Game.ammo.add(items);
+						}
+						//Checking energy
+						else if ( itemIndex == 4) {
+							Game.energy.add(items);							
 						}
 						
-						else Game.entities.add(Items);
+						else Game.entities.add(items);
 						//Items.setMask(3, 3, 10, 10);
 						
 					}

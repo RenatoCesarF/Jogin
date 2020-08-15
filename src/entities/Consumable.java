@@ -38,7 +38,7 @@ public class Consumable extends Entity{
 	
 	//upload to the game the sprites of itens
 	public static BufferedImage medKit = Game.itemsSprite.getSprite(16*0, 16, 16, 16);
-	public static BufferedImage bullets = Game.itemsSprite.getSprite(16*1, 16, 16, 16);
+	public static BufferedImage ammo = Game.itemsSprite.getSprite(16*1, 16, 16, 16);
 	public static BufferedImage energy_C = Game.itemsSprite.getSprite(16*2, 16, 16, 16);
 	public static BufferedImage shild = Game.itemsSprite.getSprite(16*3, 16, 16, 16);
 	public static BufferedImage manapot = Game.itemsSprite.getSprite(16*4, 16, 16, 16);
@@ -47,7 +47,7 @@ public class Consumable extends Entity{
 
 	public static BufferedImage randomItem(int itemIndex) {
 		if(itemIndex == 0) return medKit;
-		if(itemIndex == 1) return bullets;
+		if(itemIndex == 1) return ammo;
 		if(itemIndex == 2) return shild;
 		if(itemIndex == 3) return manapot;
 		if(itemIndex == 4) return energy_C;

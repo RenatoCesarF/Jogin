@@ -22,6 +22,8 @@ public class Player extends Entity{
 	public static double life = 5, maxLife = 5;
 	private int colidingArea = 16;
 	
+	public int ammo = 0, maxAmmo = 40;
+	
 	private BufferedImage[] playerRight;
 	private BufferedImage[] playerLeft;
 	private BufferedImage[] playerUp;
@@ -98,7 +100,9 @@ public class Player extends Entity{
 		System.exit(1);
 	}
 
-	
+	public void addAmmmo(int amount) {
+		this.ammo += amount;
+	}
 	
 	public void tick(){
 		movedHorizontal = false;
@@ -142,7 +146,8 @@ public class Player extends Entity{
 		}
 		
 		//Checking the collision
-		this.checkCollisionItem();
+		this.checkCollisionWithEnergy();
+		this.checkCollisionWithAmmo();
 		
 		//Camera Follow the player
 		Camera.x =  Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH * 16 - Game.WIDTH);
@@ -152,7 +157,7 @@ public class Player extends Entity{
 
 	}
 	
-	public void checkCollisionItem() {
+	public void checkCollisionWithEnergy() {
 		for(int i = 0; i < Game.energy.size(); i++) {
 			Entity singleEntity= Game.energy.get(i);
 
@@ -164,11 +169,29 @@ public class Player extends Entity{
 						Game.energy.remove(singleEntity); 
 						Player.life +=1;
 					}
-					
 				}
 			}
 		}
 	}
+	
+	public void checkCollisionWithAmmo() {
+		for(int i = 0; i < Game.ammo.size(); i++) {
+			Entity singleEntity= Game.ammo.get(i);
+
+			if(singleEntity instanceof Consumable) {
+
+				if(Entity.isColidding(this, singleEntity)) {
+					
+					if(Game.player.ammo < Game.player.maxAmmo) {
+						Game.ammo.remove(singleEntity); 
+						this.addAmmmo(10);//We can change how manny ammo you get with a future variable
+						System.out.println("getammo");
+					}
+				}
+			}
+		}
+	}
+	
 	
 	public void render(Graphics g) {
 		if(right) {
@@ -189,8 +212,6 @@ public class Player extends Entity{
 		}
 
 		
-		g.setColor(Color.blue);
-		g.fillRect(this.getX(),this.getY(),
-				16,16);
+		
 	}
 }
