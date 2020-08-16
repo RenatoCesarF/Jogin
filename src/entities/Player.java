@@ -3,7 +3,10 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import graficos.Spritesheet;
+import graficos.UI;
 import main.Game;
 import world.Camera;
 import world.World;
@@ -24,7 +27,7 @@ public class Player extends Entity{
 	
 	private int colidingArea = 16;
 	
-	public static double life = 5, maxLife = 5;
+	public double life = 5, maxLife = 5;
 	public int ammo = 0, maxAmmo = 40;
 	
 	private BufferedImage[] playerRight;
@@ -74,14 +77,14 @@ public class Player extends Entity{
 	}
 	
 	public void loseLife(int damage) {
-		Player.life -= damage;
+		Game.player.life -= damage;
 		Game.player.isDamaged = true;
-		System.out.println("new life: " + Player.life);
+		System.out.println("new life: " + Game.player.life);
 		
 		immunity();
 		
 		
-		if(Player.life <= 0 ) {
+		if(Game.player.life <= 0 ) {
 			playderDied();
 		}
 	}
@@ -107,7 +110,25 @@ public class Player extends Entity{
 	}
 	
 	public void playderDied() {
-		System.exit(1);
+		Game.entities.clear();
+		Game.energy.clear();
+		Game.ammo.clear();
+		Game.entities = new ArrayList<Entity>();
+		Game.energy = new ArrayList<Entity>();
+		Game.ammo = new ArrayList<Entity>();
+		Game.enemies = new ArrayList<Enemy>();
+		
+		Game.itemsSprite = new Spritesheet("/itens.png"); //itens
+		Game.worldSprite = new Spritesheet("/tiles.png"); //tiles
+		Game.playerSprite = new Spritesheet("/player.png"); //player
+		Game.uiSprite = new Spritesheet("/UI.png");
+		
+		//Player               16 16
+		Game.player = new Player(0,0,1,1,Game.playerSprite.getSprite(0, 0,16,16));
+		Game.entities.add(Game.player);
+		
+		Game.world = new World("/map.png"); //inicializando a classe de desenhar mundo
+		
 	}
 
 	public void addAmmmo(int amount) {
@@ -159,7 +180,7 @@ public class Player extends Entity{
 		this.checkCollisionWithEnergy();
 		this.checkCollisionWithAmmo();
 		
-		
+		//Controll the animation of get damage
 		if(isDamaged) {
 			Game.player.damagedFrames++;
 			if(Game.player.damagedFrames == 5) {
@@ -184,9 +205,9 @@ public class Player extends Entity{
 
 				if(Entity.isColidding(this, singleEntity)) {
 					
-					if(Player.life < Player.maxLife) {
+					if(Game.player.life < Game.player.maxLife) {
 						Game.energy.remove(singleEntity); 
-						Player.life +=1;
+						Game.player.life +=1;
 					}
 				}
 			}

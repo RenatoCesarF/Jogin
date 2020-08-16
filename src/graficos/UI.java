@@ -20,16 +20,16 @@ public class UI {
 		/*============= Player Life ==========*/
 		//BackGound color
 		g.setColor(new Color(139,155,180));
-		g.fillRect(13*scale, 8*scale, ((int)(Player.maxLife))+45*scale, 8*scale);
+		g.fillRect(13*scale, 8*scale, ((int)(Game.player.maxLife))+45*scale, 8*scale);
 		
 		//Life color
 		g.setColor(new Color(254, 174, 52));
-		g.fillRect(13*scale,8*scale, (int)((Player.life/Player.maxLife)*50*scale), 8*scale);
+		g.fillRect(13*scale,8*scale, (int)((Game.player.life/Game.player.maxLife)*50*scale), 8*scale);
 		
 		//String of lifes
 		g.setColor(new Color(58,68,102));
 		g.setFont(new Font("arial",Font.BOLD,8*scale));
-		g.drawString((int)Player.life+"/"+(int)Player.maxLife, 34*scale, 15*scale);
+		g.drawString((int)Game.player.life+"/"+(int)Game.player.maxLife, 34*scale, 15*scale);
 		
 		
 		
