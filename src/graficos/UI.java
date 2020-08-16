@@ -37,7 +37,7 @@ public class UI {
 		//Drawing the Ammo stufs
 		g.setFont(new Font("arial", Font.BOLD,7*5));
 		g.setColor(new Color(247,118,34));
-		g.drawString(Game.player.ammo+"/"+ Game.player.maxAmmo,60, 120);
+		g.drawString(Game.player.ammo+"/"+ Game.player.maxAmmo,63, 118);
 		
 		
 	}

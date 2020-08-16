@@ -19,9 +19,12 @@ public class Player extends Entity{
 	private int maxIndexHorizontal = 8, maxIndexVertical = 4;
 	private boolean movedHorizontal = false;
 	
-	public static double life = 5, maxLife = 5;
+	public boolean isDamaged = false;
+	private int damagedFrames = 0;
+	
 	private int colidingArea = 16;
 	
+	public static double life = 5, maxLife = 5;
 	public int ammo = 0, maxAmmo = 40;
 	
 	private BufferedImage[] playerRight;
@@ -29,6 +32,8 @@ public class Player extends Entity{
 	private BufferedImage[] playerUp;
 	private BufferedImage[] playerDown;
 	private BufferedImage[] playerStatic;
+	
+	private BufferedImage playerDameged;
 	
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -38,6 +43,9 @@ public class Player extends Entity{
 		playerUp = new BufferedImage[4];
 		playerDown = new BufferedImage[4];
 		playerStatic = new BufferedImage[2];
+		
+		playerDameged = Game.playerSprite.getSprite(0, 16*5, 16, 16);
+	
 		
 		//sprite player static
 		for(int i = 0; i < 2; i++) {			          //frame,start, largura, algura 
@@ -61,19 +69,21 @@ public class Player extends Entity{
 		}
 	}
 	
+	public int getColidingArea() {
+		return this.colidingArea;
+	}
+	
 	public void loseLife(int damage) {
 		Player.life -= damage;
+		Game.player.isDamaged = true;
 		System.out.println("new life: " + Player.life);
 		
 		immunity();
 		
+		
 		if(Player.life <= 0 ) {
 			playderDied();
 		}
-	}
-	
-	public int getColidingArea() {
-		return this.colidingArea;
 	}
 	
 	public void immunity() {
@@ -149,6 +159,15 @@ public class Player extends Entity{
 		this.checkCollisionWithEnergy();
 		this.checkCollisionWithAmmo();
 		
+		
+		if(isDamaged) {
+			Game.player.damagedFrames++;
+			if(Game.player.damagedFrames == 5) {
+				Game.player.damagedFrames = 0;
+				isDamaged = false;
+			}
+		}
+		
 		//Camera Follow the player
 		Camera.x =  Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH * 16 - Game.WIDTH);
 		Camera.y =  Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT * 16 - Game.HEIGHT);
@@ -194,21 +213,27 @@ public class Player extends Entity{
 	
 	
 	public void render(Graphics g) {
-		if(right) {
-			g.drawImage(playerRight[indexHorizontal],this.getX() - Camera.x,this.getY() - Camera.y,null);
+		if(!isDamaged) {
+			
+			if(right) {
+				g.drawImage(playerRight[indexHorizontal],this.getX() - Camera.x,this.getY() - Camera.y,null);
+			}
+			else if(left) {
+				g.drawImage(playerLeft[indexHorizontal],this.getX() - Camera.x,this.getY() - Camera.y,null);
+			}
+			else if(up) {			
+				g.drawImage(playerUp[indexVertical],this.getX() - Camera.x,this.getY() - Camera.y,null);
+			}
+			else if(down) {
+				g.drawImage(playerDown[indexVertical],this.getX() - Camera.x,this.getY() - Camera.y,null);
+			}
+			
+			else{
+				g.drawImage(playerStatic[1], this.getX() - Camera.x, this.getY() - Camera.y,null);
+			}
 		}
-		else if(left) {
-			g.drawImage(playerLeft[indexHorizontal],this.getX() - Camera.x,this.getY() - Camera.y,null);
-		}
-		else if(up) {			
-			g.drawImage(playerUp[indexVertical],this.getX() - Camera.x,this.getY() - Camera.y,null);
-		}
-		else if(down) {
-			g.drawImage(playerDown[indexVertical],this.getX() - Camera.x,this.getY() - Camera.y,null);
-		}
-		
 		else {
-			g.drawImage(playerStatic[1], this.getX() - Camera.x, this.getY() - Camera.y,null);
+			g.drawImage(playerDameged, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 
 		

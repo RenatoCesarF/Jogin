@@ -27,10 +27,10 @@ public class Enemy extends Entity{
 		
 		sprites = new BufferedImage[4];
 		
-		sprites[0] = Game.playerSprite.getSprite(0*16, 16*5, 16, 16);
-		sprites[1] = Game.playerSprite.getSprite(1*16, 16*5, 16, 16);
-		sprites[2] = Game.playerSprite.getSprite(2*16, 16*5, 16, 16);
-		sprites[3] = Game.playerSprite.getSprite(3*16, 16*5, 16, 16);
+		sprites[0] = Game.playerSprite.getSprite(0*16, 16*8, 16, 16);
+		sprites[1] = Game.playerSprite.getSprite(1*16, 16*8, 16, 16);
+		sprites[2] = Game.playerSprite.getSprite(2*16, 16*8, 16, 16);
+		sprites[3] = Game.playerSprite.getSprite(3*16, 16*8, 16, 16);
 		
 	}
 	
