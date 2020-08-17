@@ -73,9 +73,15 @@ public class World {
 					
 					else if(pixelAtual == 0xFF00ff05){
 						//Weapons
-						Consumable Weapons = new Consumable(xx*16, yy*16, 16,16, Consumable.randomWeapon());
-						Weapons.setMask(3, 3, 10, 10);
-						Game.entities.add(Weapons);
+						
+						Random randomWeapon = new Random();
+						int weaponIndex = randomWeapon.nextInt(8);
+						Consumable Weapons = new Consumable(xx*16, yy*16, 16,16, Consumable.randomWeapon(weaponIndex));
+						Weapons.setMask(3, 3, 13, 13);
+						
+						Game.weaponArray.add(weaponIndex);
+						Game.gun.add(Weapons);
+						System.out.println(Game.weaponArray);
 					}
 					
 					else if(pixelAtual == 0XFFFF0000) {

@@ -1,27 +1,47 @@
 package entities;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import main.Game;
 
 public class Consumable extends Entity{
-	
+	 
 	//Random Weapons
-	public static BufferedImage randomWeapon() {
-		Random randomWeapon = new Random();
-		int weaponIndex = randomWeapon.nextInt(8);
+	public static BufferedImage randomWeapon(int weaponIndex) {
+
 		
-		if(weaponIndex == 1) return armor2;
-		if(weaponIndex == 2) return armor3;
-		if(weaponIndex == 3) return mage1;
-		if(weaponIndex == 4) return mage2;
-		if(weaponIndex == 5) return katana;
-		if(weaponIndex == 6) return sword;
-		if(weaponIndex == 7) return granade;
+		if(weaponIndex == 0) {
+			return armor1;
+		}
+		if(weaponIndex == 1) {
+			return armor2;
+		}
+		if(weaponIndex == 2) {
+			return armor3;
+		}
+		if(weaponIndex == 3) {
+			return mage1;
+		}
+		if(weaponIndex == 4) {
+			return mage2;
+		}
+		if(weaponIndex == 5) {
+			return katana;
+		}
+		if(weaponIndex == 6) {
+			return sword;
+		}
+		if(weaponIndex == 7) {
+			return granade;
+		}
 		
 		else return armor1;
+	
 	}
+
 	
 	public static BufferedImage armor1 = Game.itemsSprite.getSprite(16*0, 0, 16, 16);
 	public static BufferedImage armor2 = Game.itemsSprite.getSprite(16*1, 0, 16, 16);

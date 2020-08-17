@@ -43,6 +43,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static List<Entity> ammo;
 	public static List<Entity> mana;
 	
+	public static List<Entity> gun;
+	public static List<Integer> weaponArray = new ArrayList<Integer>();
 	
 	//Sprites
 	public static Spritesheet playerSprite;
@@ -76,6 +78,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		entities = new ArrayList<Entity>();
 		energy = new ArrayList<Entity>();
 		ammo = new ArrayList<Entity>();
+		gun = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
 		
 		itemsSprite = new Spritesheet("/itens.png"); //itens
@@ -163,6 +166,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			Entity e = ammo.get(i);
 			e.render(g);
 		}
+		//Rendering the gun sprite
+		for(int i = 0; i< gun.size();i++) {
+			Entity e = gun.get(i);
+			e.render(g);
+		}
 		
 		
 		
@@ -200,7 +208,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			}
 			
 			if(System.currentTimeMillis() - timer >= 1000) {
-				System.out.println("FPS: " + frames);
+				//System.out.println("FPS: " + frames);
 				frames = 0;
 				timer +=1000;
 			}

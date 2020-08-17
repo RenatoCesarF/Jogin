@@ -29,6 +29,8 @@ public class Player extends Entity{
 	
 	public double life = 5, maxLife = 5;
 	public int ammo = 0, maxAmmo = 40;
+	private boolean hasItem = false;
+	private int damage = 0;
 	
 	private BufferedImage[] playerRight;
 	private BufferedImage[] playerLeft;
@@ -179,11 +181,12 @@ public class Player extends Entity{
 		//Checking the collision
 		this.checkCollisionWithEnergy();
 		this.checkCollisionWithAmmo();
+		this.checkCollisionWithGun();
 		
 		//Controll the animation of get damage
 		if(isDamaged) {
 			Game.player.damagedFrames++;
-			if(Game.player.damagedFrames == 5) {
+			if(Game.player.damagedFrames == 10) {
 				Game.player.damagedFrames = 0;
 				isDamaged = false;
 			}
@@ -225,13 +228,52 @@ public class Player extends Entity{
 					if(Game.player.ammo < Game.player.maxAmmo) {
 						Game.ammo.remove(singleEntity); 
 						this.addAmmmo(10);//We can change how manny ammo you get with a future variable
-						System.out.println("getammo");
 					}
 				}
 			}
 		}
 	}
 	
+
+	public void checkCollisionWithGun() {
+		for(int i = 0; i < Game.gun.size(); i++) {
+			Entity singleEntity= Game.gun.get(i);
+
+			if(singleEntity instanceof Consumable) {
+
+				if(Entity.isColidding(this, singleEntity)) {
+					
+					int getThisWeapon = Game.weaponArray.get(Game.gun.indexOf(singleEntity));
+					System.out.println(Game.weaponArray.get(Game.gun.indexOf(singleEntity)));
+					
+					Game.gun.remove(singleEntity);
+					//Game.weaponArray.remove(getThisWeapon);
+					
+					Game.player.getGun(getThisWeapon);
+				}
+			}
+		}
+	}
+	
+	
+	public void getGun(int weaponIndex) {
+		switch(weaponIndex) {
+		
+			case 0:{ this.damage = 1;}//little pistol
+				
+			case 1:{this.damage = 5;}//shotgun
+			
+			case 2: {this.damage = 10;}	//big gun
+			
+			case 3: {this.damage = 10;}	//water book
+			
+			case 4: this.damage = 13; //fire book
+			
+			case 5: this.damage = 13; //katana
+		}
+		
+		
+	}
 	
 	public void render(Graphics g) {
 		if(!isDamaged) {
