@@ -39,11 +39,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static List<Enemy> enemies; 
 	
 	//List of items
-	public static List<Entity> energy;
-	public static List<Entity> ammo;
-	public static List<Entity> mana;
 	
-	public static List<Entity> gun;
+	public static List<Entity> item;
+	public static List<Integer> itemArray = new ArrayList<Integer>();
+	
+	public static List<Entity> weapon;
 	public static List<Integer> weaponArray = new ArrayList<Integer>();
 	
 	//Sprites
@@ -76,9 +76,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
-		energy = new ArrayList<Entity>();
-		ammo = new ArrayList<Entity>();
-		gun = new ArrayList<Entity>();
+
+		item = new ArrayList<Entity>();
+		weapon = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
 		
 		itemsSprite = new Spritesheet("/itens.png"); //itens
@@ -156,19 +156,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			e.render(g);
 		
 		}
-		//Rendering the energy sprite
-		for(int i = 0; i< energy.size();i++) {
-			Entity e = energy.get(i);
+
+		//Rendering the item sprite
+		for(int i = 0; i< item.size();i++) {
+			Entity e = item.get(i);
 			e.render(g);
 		}
-		//Rendering the ammo sprite
-		for(int i = 0; i< ammo.size();i++) {
-			Entity e = ammo.get(i);
-			e.render(g);
-		}
-		//Rendering the gun sprite
-		for(int i = 0; i< gun.size();i++) {
-			Entity e = gun.get(i);
+		
+		//Rendering the weapon sprite
+		for(int i = 0; i< weapon.size();i++) {
+			Entity e = weapon.get(i);
 			e.render(g);
 		}
 		

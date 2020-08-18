@@ -57,24 +57,15 @@ public class World {
 					}
 					
 					case 0xFFff00ea: {//Items
-						//TODO: change this to be like the Weapon checker
-						
 						Random randomItem = new Random();
 						int itemIndex = randomItem.nextInt(5);
 						
 						Consumable items = new Consumable(xx*16, yy* 16, 16,16, Consumable.randomItem(itemIndex));
-
-						//Checking ammo
-						if(itemIndex == 1) {
-							Game.ammo.add(items);
-						}
-						//Checking energy
-						else if ( itemIndex == 4) {
-							Game.energy.add(items);							
-						}
-						
-						else Game.entities.add(items);
 						//Items.setMask(3, 3, 10, 10);
+
+						Game.itemArray.add(itemIndex);						
+						Game.item.add(items);							
+						
 						break;
 					}
 				
@@ -82,11 +73,12 @@ public class World {
 						
 						Random randomWeapon = new Random();
 						int weaponIndex = randomWeapon.nextInt(8);
+						
 						Consumable Weapons = new Consumable(xx*16, yy*16, 16,16, Consumable.randomWeapon(weaponIndex));
-						Weapons.setMask(3, 3, 13, 13);
+						//Weapons.setMask(3, 3, 13, 13);
 						
 						Game.weaponArray.add(weaponIndex);
-						Game.gun.add(Weapons);
+						Game.weapon.add(Weapons);
 						break;
 					}
 				

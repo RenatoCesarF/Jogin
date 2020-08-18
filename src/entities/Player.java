@@ -115,11 +115,11 @@ public class Player extends Entity{
 	
 	public void playderDied() {
 		Game.entities.clear();
-		Game.energy.clear();
-		Game.ammo.clear();
+		Game.item.clear();
+
 		Game.entities = new ArrayList<Entity>();
-		Game.energy = new ArrayList<Entity>();
-		Game.ammo = new ArrayList<Entity>();
+		Game.item = new ArrayList<Entity>();
+
 		Game.enemies = new ArrayList<Enemy>();
 		
 		Game.itemsSprite = new Spritesheet("/itens.png"); //itens
@@ -136,55 +136,106 @@ public class Player extends Entity{
 	}
 
 	// ============== Item Stufs ============== \\
-	public void checkCollisionWithEnergy() {
-		for(int i = 0; i < Game.energy.size(); i++) {
-			Entity singleEntity= Game.energy.get(i);
+	public void checkCollisionWithItem() {
+		for(int i = 0; i < Game.item.size(); i++) {
+			Entity singleEntity= Game.item.get(i);
 
 			if(singleEntity instanceof Consumable) {
 
 				if(Entity.isColidding(this, singleEntity)) {
 					
-					if(Game.player.life < Game.player.maxLife) {
-						Game.energy.remove(singleEntity); 
-						Game.player.life +=1;
+					int itemIndex =  Game.item.indexOf(singleEntity);
+					int getThisItem = Game.itemArray.get(itemIndex);
+					
+					switch(getThisItem) {
+						case 0: {
+							System.out.println("Get Medic kit");
+							Game.item.remove(singleEntity);
+							Game.itemArray.remove(itemIndex);
+							break;
+						}
+							
+						case 1:{
+							if(!isFullAmmmo()) {
+								Game.item.remove(singleEntity);
+								Game.itemArray.remove(itemIndex);
+							}
+							else return;
+							break;
+						}
+						
+						case 2:{
+							System.out.println("Get shild");
+							Game.item.remove(singleEntity);
+							Game.itemArray.remove(itemIndex);
+							break;
+						}
+						
+						case 3: {
+							System.out.println("Get Mana potion");
+							Game.item.remove(singleEntity);
+							Game.itemArray.remove(itemIndex);
+							break;
+						}
+						
+						case 4:{
+							if(!isFullLife()) {
+								Game.item.remove(singleEntity);
+								Game.itemArray.remove(itemIndex);
+							}
+							else return;
+							break;
+						}
+					
 					}
+					
 				}
 			}
 		}
 	}
-	
-	public void checkCollisionWithAmmo() {
-		for(int i = 0; i < Game.ammo.size(); i++) {
-			Entity singleEntity= Game.ammo.get(i);
 
-			if(singleEntity instanceof Consumable) {
+	//Item useless manager
 
-				if(Entity.isColidding(this, singleEntity)) {
-					
-					if(Game.player.ammo < Game.player.maxAmmo) {
-						Game.ammo.remove(singleEntity); 
-						this.addAmmmo(10);//We can change how manny ammo you get with a future variable
-					}
-				}
-			}
+	public boolean isFullLife() {
+		if(Game.player.life < Game.player.maxLife) {
+			addLife(1);
+			return false;
 		}
+		else return true;
+	}
+	
+	public void addLife(int amount) {
+		Game.player.life +=1;
+	}
+	
+
+	public boolean isFullAmmmo(){
+		if(Game.player.ammo < Game.player.maxAmmo) {
+			this.addAmmmo(10);//We can change how manny ammo you get with a future variable
+			return false;
+		}
+		else return true;
+	}
+	
+	public void addAmmmo(int amount) {
+		this.ammo += amount;
 	}
 	
 	// ============= Weapon Stufs ============= \\
 	public void checkCollisionWithWeapons() {
-		for(int i = 0; i < Game.gun.size(); i++) {
-			Entity singleEntity= Game.gun.get(i);
+		for(int i = 0; i < Game.weapon.size(); i++) {
+			Entity singleEntity= Game.weapon.get(i);
 
 			if(singleEntity instanceof Consumable) {
 
 				if(Entity.isColidding(this, singleEntity)) {
 					
-					int itemIndex =  Game.gun.indexOf(singleEntity);
-					int getThisWeapon = Game.weaponArray.get(itemIndex);
+					int weaponIndex =  Game.weapon.indexOf(singleEntity);
+					int getThisWeapon = Game.weaponArray.get(weaponIndex);
 					
 					
-					Game.gun.remove(singleEntity);
-					Game.weaponArray.remove(itemIndex);
+					Game.weapon.remove(singleEntity);
+					Game.weaponArray.remove(weaponIndex);
 					
 					System.out.println(Game.weaponArray);
 					
@@ -253,9 +304,7 @@ public class Player extends Entity{
 		this.damage = damage;
 	}
 
-	public void addAmmmo(int amount) {
-		this.ammo += amount;
-	}
+
 	
 	
 	// ============= Frame Stufs ============== \\
@@ -301,8 +350,7 @@ public class Player extends Entity{
 		}
 		
 		//Checking the collision
-		this.checkCollisionWithEnergy();
-		this.checkCollisionWithAmmo();
+		this.checkCollisionWithItem();
 		this.checkCollisionWithWeapons();
 		
 		//Controll the animation of get damage
