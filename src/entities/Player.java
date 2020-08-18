@@ -3,6 +3,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import graficos.Spritesheet;
@@ -243,11 +244,14 @@ public class Player extends Entity{
 
 				if(Entity.isColidding(this, singleEntity)) {
 					
-					int getThisWeapon = Game.weaponArray.get(Game.gun.indexOf(singleEntity));
-					System.out.println(Game.weaponArray.get(Game.gun.indexOf(singleEntity)));
+					int itemIndex =  Game.gun.indexOf(singleEntity);
+					int getThisWeapon = Game.weaponArray.get(itemIndex);
+					
 					
 					Game.gun.remove(singleEntity);
-					//Game.weaponArray.remove(getThisWeapon);
+					Game.weaponArray.remove(itemIndex);
+					
+					System.out.println(Game.weaponArray);
 					
 					Game.player.getGun(getThisWeapon);
 				}
@@ -257,19 +261,55 @@ public class Player extends Entity{
 	
 	
 	public void getGun(int weaponIndex) {
-		switch(weaponIndex) {
 		
-			case 0:{ this.damage = 1;}//little pistol
+		switch(weaponIndex) {
+			case 0:{ 
+				this.damage = 1;
+				System.out.println("Equiped the little gun");
+				break;
+			}
 				
-			case 1:{this.damage = 5;}//shotgun
+			case 1:{
+				this.damage = 5;
+				System.out.println("Equiped the shotgun");
+				break;
+			}
 			
-			case 2: {this.damage = 10;}	//big gun
+			case 2: {
+				this.damage = 10;
+				System.out.println("Equiped the biggest gun");
+				break;
+			}
 			
-			case 3: {this.damage = 10;}	//water book
+			case 3: {
+				this.damage = 10;
+				System.out.println("Equiped the book of water");
+				break;
+			}	
 			
-			case 4: this.damage = 13; //fire book
+			case 4:{
+				this.damage = 13;
+				System.out.println("Equiped the book of fire");
+				break;
+			}
 			
-			case 5: this.damage = 13; //katana
+			case 5: {
+				this.damage = 13; //katana
+				System.out.println("Equiped the Katana");
+				break;
+			}
+			
+			case 6: {
+				this.damage = 15;
+				System.out.println("Equiped the sword");
+				break;
+			}
+			
+			case 7: {
+				this.damage = 20;
+				System.out.println("Get a grenade");
+				break;
+			}
 		}
 		
 		
