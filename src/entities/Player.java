@@ -79,6 +79,7 @@ public class Player extends Entity{
 		return this.colidingArea;
 	}
 	
+	// ============= Life Stufs =============== \\
 	public void loseLife(int damage) {
 		Game.player.life -= damage;
 		Game.player.isDamaged = true;
@@ -134,10 +135,130 @@ public class Player extends Entity{
 		
 	}
 
+	// ============== Item Stufs ============== \\
+	public void checkCollisionWithEnergy() {
+		for(int i = 0; i < Game.energy.size(); i++) {
+			Entity singleEntity= Game.energy.get(i);
+
+			if(singleEntity instanceof Consumable) {
+
+				if(Entity.isColidding(this, singleEntity)) {
+					
+					if(Game.player.life < Game.player.maxLife) {
+						Game.energy.remove(singleEntity); 
+						Game.player.life +=1;
+					}
+				}
+			}
+		}
+	}
+	
+	public void checkCollisionWithAmmo() {
+		for(int i = 0; i < Game.ammo.size(); i++) {
+			Entity singleEntity= Game.ammo.get(i);
+
+			if(singleEntity instanceof Consumable) {
+
+				if(Entity.isColidding(this, singleEntity)) {
+					
+					if(Game.player.ammo < Game.player.maxAmmo) {
+						Game.ammo.remove(singleEntity); 
+						this.addAmmmo(10);//We can change how manny ammo you get with a future variable
+					}
+				}
+			}
+		}
+	}
+	
+	// ============= Weapon Stufs ============= \\
+	public void checkCollisionWithWeapons() {
+		for(int i = 0; i < Game.gun.size(); i++) {
+			Entity singleEntity= Game.gun.get(i);
+
+			if(singleEntity instanceof Consumable) {
+
+				if(Entity.isColidding(this, singleEntity)) {
+					
+					int itemIndex =  Game.gun.indexOf(singleEntity);
+					int getThisWeapon = Game.weaponArray.get(itemIndex);
+					
+					
+					Game.gun.remove(singleEntity);
+					Game.weaponArray.remove(itemIndex);
+					
+					System.out.println(Game.weaponArray);
+					
+					Game.player.getGun(getThisWeapon);
+				}
+			}
+		}
+	}
+	
+	public void getGun(int weaponIndex) {
+		
+		switch(weaponIndex) {
+			case 0:{ 
+				setDamage(1);
+				System.out.println("Equiped the little gun");
+				break;
+			}
+				
+			case 1:{
+				setDamage(5);
+				System.out.println("Equiped the shotgun");
+				break;
+			}
+			
+			case 2: {
+				setDamage(10);
+				System.out.println("Equiped the biggest gun");
+				break;
+			}
+			
+			case 3: {
+				setDamage(10);
+				System.out.println("Equiped the book of water");
+				break;
+			}	
+			
+			case 4:{
+				setDamage(13);
+				System.out.println("Equiped the book of fire");
+				break;
+			}
+			
+			case 5: {
+				setDamage(13);
+				System.out.println("Equiped the Katana");
+				break;
+			}
+			
+			case 6: {
+				setDamage(13);
+				System.out.println("Equiped the sword");
+				break;
+			}
+			
+			case 7: {
+				setDamage(20);
+				System.out.println("Get a grenade");
+				break;
+			}
+		}
+		
+		
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
 	public void addAmmmo(int amount) {
 		this.ammo += amount;
 	}
 	
+	
+	// ============= Frame Stufs ============== \\
 	public void tick(){
 		movedHorizontal = false;
 		if(up && World.isFree(this.getX(), (int)(y-speed))){
@@ -182,7 +303,7 @@ public class Player extends Entity{
 		//Checking the collision
 		this.checkCollisionWithEnergy();
 		this.checkCollisionWithAmmo();
-		this.checkCollisionWithGun();
+		this.checkCollisionWithWeapons();
 		
 		//Controll the animation of get damage
 		if(isDamaged) {
@@ -199,120 +320,6 @@ public class Player extends Entity{
 
 		
 
-	}
-	
-	public void checkCollisionWithEnergy() {
-		for(int i = 0; i < Game.energy.size(); i++) {
-			Entity singleEntity= Game.energy.get(i);
-
-			if(singleEntity instanceof Consumable) {
-
-				if(Entity.isColidding(this, singleEntity)) {
-					
-					if(Game.player.life < Game.player.maxLife) {
-						Game.energy.remove(singleEntity); 
-						Game.player.life +=1;
-					}
-				}
-			}
-		}
-	}
-	
-	public void checkCollisionWithAmmo() {
-		for(int i = 0; i < Game.ammo.size(); i++) {
-			Entity singleEntity= Game.ammo.get(i);
-
-			if(singleEntity instanceof Consumable) {
-
-				if(Entity.isColidding(this, singleEntity)) {
-					
-					if(Game.player.ammo < Game.player.maxAmmo) {
-						Game.ammo.remove(singleEntity); 
-						this.addAmmmo(10);//We can change how manny ammo you get with a future variable
-					}
-				}
-			}
-		}
-	}
-	
-
-	public void checkCollisionWithGun() {
-		for(int i = 0; i < Game.gun.size(); i++) {
-			Entity singleEntity= Game.gun.get(i);
-
-			if(singleEntity instanceof Consumable) {
-
-				if(Entity.isColidding(this, singleEntity)) {
-					
-					int itemIndex =  Game.gun.indexOf(singleEntity);
-					int getThisWeapon = Game.weaponArray.get(itemIndex);
-					
-					
-					Game.gun.remove(singleEntity);
-					Game.weaponArray.remove(itemIndex);
-					
-					System.out.println(Game.weaponArray);
-					
-					Game.player.getGun(getThisWeapon);
-				}
-			}
-		}
-	}
-	
-	
-	public void getGun(int weaponIndex) {
-		
-		switch(weaponIndex) {
-			case 0:{ 
-				this.damage = 1;
-				System.out.println("Equiped the little gun");
-				break;
-			}
-				
-			case 1:{
-				this.damage = 5;
-				System.out.println("Equiped the shotgun");
-				break;
-			}
-			
-			case 2: {
-				this.damage = 10;
-				System.out.println("Equiped the biggest gun");
-				break;
-			}
-			
-			case 3: {
-				this.damage = 10;
-				System.out.println("Equiped the book of water");
-				break;
-			}	
-			
-			case 4:{
-				this.damage = 13;
-				System.out.println("Equiped the book of fire");
-				break;
-			}
-			
-			case 5: {
-				this.damage = 13; //katana
-				System.out.println("Equiped the Katana");
-				break;
-			}
-			
-			case 6: {
-				this.damage = 15;
-				System.out.println("Equiped the sword");
-				break;
-			}
-			
-			case 7: {
-				this.damage = 20;
-				System.out.println("Get a grenade");
-				break;
-			}
-		}
-		
-		
 	}
 	
 	public void render(Graphics g) {
