@@ -43,7 +43,7 @@ The color pallet: endesga-32
 
 ### 🖥️Let's see some prints
 
-![print](https://user-images.githubusercontent.com/62253156/88493724-adfca280-cf80-11ea-8728-e812ace797e1.png)
+![Sem título](https://user-images.githubusercontent.com/62253156/90515590-de270380-e130-11ea-8b25-c329f4d156c9.png)
 
 
 ## If you want to make a better logo to me I will a appreciate this, the photoshop project are in the files 
