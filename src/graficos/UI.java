@@ -9,15 +9,95 @@ import entities.Player;
 import main.Game;
 
 public class UI {
-	private BufferedImage[] energySymblo;
-	private BufferedImage[] ammoSymblo;
+	private BufferedImage[] energySymbol;
+	private BufferedImage[] ammoSymbol;
+	private BufferedImage[] weaponSymbol;
+	
+	private BufferedImage[] teste;
 
 	private int animationIndex = 0, animationSpeed = 0;
 	public int scale = 4;
 
+	public UI() {
+		energySymbol = new BufferedImage[4];
+		weaponSymbol = new BufferedImage[8];
+		ammoSymbol = new BufferedImage[1];
+		
+		teste = new BufferedImage[2];
+		teste[1] = Game.uiSprite.getSprite(16*5, 16*2, 16, 16);
+		
+		//Ammo UI sprites
+		ammoSymbol[0] = Game.uiSprite.getSprite(16*0, 16*3, 16, 16);
+		
+		//Energy UI sprites
+		for(int i = 0; i < energySymbol.length;i ++) {
+			energySymbol[i] = Game.uiSprite.getSprite(16*i, 0, 16, 16);
+		}
+		
+		//Weapons UI sprites
+		for(int i = 0; i < weaponSymbol.length; i++) {			          //frame,start, largura, algura 
+			weaponSymbol[i] = Game.uiSprite.getSprite(16*i, 16*2, 16, 16);
+		}
+	}
 	
+	public void symbolsRender(Graphics g ) {
+		//Energy Symbol
+		
+		g.drawImage(energySymbol[animationIndex], 0, 4,null);
+
+		animationSpeed ++;
+		if(animationSpeed > 20) {
+			animationIndex ++;		
+			animationSpeed = 0;
+		}
+		
+		if(animationIndex >= 4) {
+			animationIndex = 0;
+		}
+		
+		//Ammo symbol
+		g.drawImage(ammoSymbol[0], 0, 19,null);
+		
+		
+
+	}
+	
+	public void renderWeapon(Graphics g) {
+		int weaponIndex = Game.player.getPlayerWeapon();
+		
+		switch(weaponIndex) {
+		
+		case 0:
+			g.drawImage(weaponSymbol[weaponIndex], 0, 33,null);
+			break;
+		case 1:
+			g.drawImage(weaponSymbol[weaponIndex], 3, 33,null);
+			break;
+		case 2:
+			g.drawImage(weaponSymbol[weaponIndex], 3, 33,null);
+			break;
+		case 3:
+			g.drawImage(weaponSymbol[weaponIndex], 0, 33,null);
+			break;
+		case 4:
+			g.drawImage(weaponSymbol[weaponIndex], 0, 33,null);
+			break;
+		case 5:
+			g.drawImage(weaponSymbol[weaponIndex], 0, 35,null);
+			break;
+		case 6:
+			g.drawImage(weaponSymbol[weaponIndex], 3, 35,null);
+			break;
+		case 7:
+			g.drawImage(weaponSymbol[weaponIndex], 0, 33,null);
+			break;
+		}
+			
+	}
+	
+	//This render function is to draw strings and HD things, the aboves ones is to draw pixeled things
 	public void render(Graphics g) {
-		/*============= Player Life ==========*/
+		//============= Player Life ==========\\
 		//BackGound color
 		g.setColor(new Color(139,155,180));
 		g.fillRect(13*scale, 8*scale, ((int)(Game.player.maxLife))+45*scale, 8*scale);
@@ -33,43 +113,12 @@ public class UI {
 		
 		
 		
-		//============== AMMO STUFS ==========
+		//============== AMMO STUFS ==========\\
 		//Drawing the Ammo stufs
 		g.setFont(new Font("arial", Font.BOLD,7*5));
 		g.setColor(new Color(247,118,34));
 		g.drawString(Game.player.ammo+"/"+ Game.player.maxAmmo,63, 118);
-		
-		
-	}
-	
-	public void symblosRender(Graphics g ) {
-		//Energy Symble
-		energySymblo = new BufferedImage[4];
-		
-		for(int i = 0; i < energySymblo.length;i ++) {
-			energySymblo[i] = Game.uiSprite.getSprite(0+(16*i), 0, 16, 16);
-		}
-		
-		g.drawImage(energySymblo[animationIndex], 0, 4,null);
 
-		animationSpeed ++;
-		if(animationSpeed > 20) {
-			animationIndex ++;		
-			animationSpeed = 0;
-		}
-		
-		if(animationIndex >=4) {
-			animationIndex = 0;
-		}
-		
-		
-		//Ammo symnblo
-		ammoSymblo = new BufferedImage[1];
-		
-		ammoSymblo[0] = Game.uiSprite.getSprite(0+(16*0), 16*3, 16, 16);
-		
-		g.drawImage(ammoSymblo[0], 0, 19,null);
-		
-	
 	}
+
 }

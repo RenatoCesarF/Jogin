@@ -72,8 +72,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		//Inicializando objetos
 
-		ui = new UI();
-		
+
 		image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 
@@ -86,8 +85,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		playerSprite = new Spritesheet("/player.png"); //player
 		uiSprite = new Spritesheet("/UI.png");
 		
-		//Player               16 16
-		player = new Player(0,0,1,1,playerSprite.getSprite(0, 0,16,16));
+		ui = new UI();
+		
+		//Player              
+		player = new Player(0,0,16,16,playerSprite.getSprite(0, 0,16,16));
 		entities.add(player);
 		
 		world = new World("/map.png"); //inicializando a classe de desenhar mundo
@@ -172,7 +173,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		
 		/***/
-		ui.symblosRender(g);
+		ui.renderWeapon(g);
+		ui.symbolsRender(g);
 		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);

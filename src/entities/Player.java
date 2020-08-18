@@ -30,6 +30,8 @@ public class Player extends Entity{
 	
 	public double life = 5, maxLife = 5;
 	public int ammo = 0, maxAmmo = 40;
+	public int myWeapon = -1;
+	
 	private boolean hasItem = false;
 	private int damage = 0;
 	
@@ -86,7 +88,6 @@ public class Player extends Entity{
 		System.out.println("new life: " + Game.player.life);
 		
 		immunity();
-		
 		
 		if(Game.player.life <= 0 ) {
 			playderDied();
@@ -194,8 +195,6 @@ public class Player extends Entity{
 		}
 	}
 
-	//Item useless manager
-
 	public boolean isFullLife() {
 		if(Game.player.life < Game.player.maxLife) {
 			addLife(1);
@@ -208,7 +207,6 @@ public class Player extends Entity{
 		Game.player.life +=1;
 	}
 	
-
 	public boolean isFullAmmmo(){
 		if(Game.player.ammo < Game.player.maxAmmo) {
 			this.addAmmmo(10);//We can change how manny ammo you get with a future variable
@@ -233,13 +231,11 @@ public class Player extends Entity{
 					int weaponIndex =  Game.weapon.indexOf(singleEntity);
 					int getThisWeapon = Game.weaponArray.get(weaponIndex);
 					
-					
 					Game.weapon.remove(singleEntity);
 					Game.weaponArray.remove(weaponIndex);
 					
-					System.out.println(Game.weaponArray);
-					
 					Game.player.getGun(getThisWeapon);
+					
 				}
 			}
 		}
@@ -249,50 +245,58 @@ public class Player extends Entity{
 		
 		switch(weaponIndex) {
 			case 0:{ 
+				setWeapon(weaponIndex);
 				setDamage(1);
-				System.out.println("Equiped the little gun");
+				System.out.println("0");
 				break;
 			}
 				
 			case 1:{
+				setWeapon(weaponIndex);
 				setDamage(5);
-				System.out.println("Equiped the shotgun");
+				System.out.println("1");
 				break;
 			}
 			
 			case 2: {
+				setWeapon(weaponIndex);
 				setDamage(10);
-				System.out.println("Equiped the biggest gun");
+				System.out.println("2");
 				break;
 			}
 			
 			case 3: {
+				setWeapon(weaponIndex);
 				setDamage(10);
-				System.out.println("Equiped the book of water");
+				System.out.println("3");
 				break;
 			}	
 			
 			case 4:{
+				setWeapon(weaponIndex);
 				setDamage(13);
-				System.out.println("Equiped the book of fire");
+				System.out.println("4");
 				break;
 			}
 			
 			case 5: {
+				setWeapon(weaponIndex);
 				setDamage(13);
-				System.out.println("Equiped the Katana");
+				System.out.println("5");
 				break;
 			}
 			
 			case 6: {
+				setWeapon(weaponIndex);
 				setDamage(13);
-				System.out.println("Equiped the sword");
+				System.out.println("6");
 				break;
 			}
 			
 			case 7: {
+				setWeapon(weaponIndex);
 				setDamage(20);
-				System.out.println("Get a grenade");
+				System.out.println("7");
 				break;
 			}
 		}
@@ -300,13 +304,17 @@ public class Player extends Entity{
 		
 	}
 
+	public void setWeapon(int weaponIndex){
+		this.myWeapon = weaponIndex;
+	}
+
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
 
-
-	
-	
+	public int getPlayerWeapon() {
+		return Game.player.myWeapon;
+	}
 	// ============= Frame Stufs ============== \\
 	public void tick(){
 		movedHorizontal = false;
