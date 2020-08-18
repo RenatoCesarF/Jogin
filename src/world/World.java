@@ -35,23 +35,30 @@ public class World {
 					
 					
 					tiles[xx + (yy * WIDTH)] = new FloorTile(xx*16, yy*16, FloorTile.randomFloor());
-					//TODO: change this "if's" to swich cases
-					if(pixelAtual == 0xFF000000) {
-						//floor
+
+					switch(pixelAtual){
+					
+					case 0xFF000000:{ //Floor
 						tiles[xx + (yy * WIDTH)] = new FloorTile(xx*16, yy*16, FloorTile.randomFloor());
-	 
+						break;
 					}
-					else if (pixelAtual == 0xFFFFFFFF){
-						//wall
+	
+					case 0xFFFFFFFF:{//Wall
+						
 						tiles[xx + (yy * WIDTH)] = new WallTile(xx*16, yy*16, WallTile.randomWall());
+						break;
 					}
-					else if(pixelAtual == 0XFF0008ff) {
-						//player
+					
+					case 0XFF0008ff: {//player
+						
 						Game.player.setX(xx*16);
 						Game.player.setY(yy*16);
+						break;
 					}
-					else if(pixelAtual == 0xFFff00ea) {
-						//Items
+					
+					case 0xFFff00ea: {//Items
+						//TODO: change this to be like the Weapon checker
+						
 						Random randomItem = new Random();
 						int itemIndex = randomItem.nextInt(5);
 						
@@ -68,11 +75,10 @@ public class World {
 						
 						else Game.entities.add(items);
 						//Items.setMask(3, 3, 10, 10);
-						
+						break;
 					}
-					
-					else if(pixelAtual == 0xFF00ff05){
-						//Weapons
+				
+					case 0xFF00ff05:{//Weapons
 						
 						Random randomWeapon = new Random();
 						int weaponIndex = randomWeapon.nextInt(8);
@@ -81,16 +87,18 @@ public class World {
 						
 						Game.weaponArray.add(weaponIndex);
 						Game.gun.add(Weapons);
-						System.out.println(Game.weaponArray);
+						break;
 					}
-					
-					else if(pixelAtual == 0XFFFF0000) {
-						//Enemy
+				
+					case 0XFFFF0000: {//Enemy
 						Enemy en = new Enemy(xx*16, yy*16,16,16, Enemy.robot);
 						Game.entities.add(en);
 						Game.enemies.add(en);
+						break;
 					}
-				}
+					
+					} //End of switch case
+				}// End of for
 				
 			}
 			

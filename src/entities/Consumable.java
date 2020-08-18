@@ -56,7 +56,7 @@ public class Consumable extends Entity{
 	
 	//=============== Random Itens =============
 	
-	//upload to the game the sprites of itens
+	//Loading to the game the sprites of itens
 	public static BufferedImage medKit = Game.itemsSprite.getSprite(16*0, 16, 16, 16);
 	public static BufferedImage ammo = Game.itemsSprite.getSprite(16*1, 16, 16, 16);
 	public static BufferedImage energy_C = Game.itemsSprite.getSprite(16*2, 16, 16, 16);
