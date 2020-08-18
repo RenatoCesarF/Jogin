@@ -29,6 +29,7 @@ public class Player extends Entity{
 	private int colidingArea = 16;
 	
 	public double life = 5, maxLife = 5;
+	public int shield = 0;
 	public int ammo = 0, maxAmmo = 40;
 	public int myWeapon = -1;
 	
@@ -83,10 +84,14 @@ public class Player extends Entity{
 	
 	// ============= Life Stufs =============== \\
 	public void loseLife(int damage) {
-		Game.player.life -= damage;
-		Game.player.isDamaged = true;
-		System.out.println("new life: " + Game.player.life);
-		
+		if(Game.player.shield > 0) {
+			Game.player.shield --;
+		}else {			
+			Game.player.life -= damage;
+			Game.player.isDamaged = true;
+			System.out.println("new life: " + Game.player.life);
+		}
+			
 		immunity();
 		
 		if(Game.player.life <= 0 ) {
@@ -149,14 +154,14 @@ public class Player extends Entity{
 					int getThisItem = Game.itemArray.get(itemIndex);
 					
 					switch(getThisItem) {
-						case 0: {
+						case 0: {// Medic kit
 							System.out.println("Get Medic kit");
 							Game.item.remove(singleEntity);
 							Game.itemArray.remove(itemIndex);
 							break;
 						}
 							
-						case 1:{
+						case 1:{// Ammo
 							if(!isFullAmmmo()) {
 								Game.item.remove(singleEntity);
 								Game.itemArray.remove(itemIndex);
@@ -165,8 +170,9 @@ public class Player extends Entity{
 							break;
 						}
 						
-						case 2:{
-							System.out.println("Get shild");
+						case 2:{// shield
+							System.out.println("Get shield");
+							addShield();
 							Game.item.remove(singleEntity);
 							Game.itemArray.remove(itemIndex);
 							break;
@@ -219,6 +225,9 @@ public class Player extends Entity{
 		this.ammo += amount;
 	}
 	
+	public void addShield() {
+		Game.player.shield ++;
+	}
 	// ============= Weapon Stufs ============= \\
 	public void checkCollisionWithWeapons() {
 		for(int i = 0; i < Game.weapon.size(); i++) {

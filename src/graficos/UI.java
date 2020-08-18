@@ -12,8 +12,7 @@ public class UI {
 	private BufferedImage[] energySymbol;
 	private BufferedImage[] ammoSymbol;
 	private BufferedImage[] weaponSymbol;
-	
-	private BufferedImage[] teste;
+	private BufferedImage[] shieldSymbol;
 
 	private int animationIndex = 0, animationSpeed = 0;
 	public int scale = 4;
@@ -22,12 +21,14 @@ public class UI {
 		energySymbol = new BufferedImage[4];
 		weaponSymbol = new BufferedImage[8];
 		ammoSymbol = new BufferedImage[1];
-		
-		teste = new BufferedImage[2];
-		teste[1] = Game.uiSprite.getSprite(16*5, 16*2, 16, 16);
+		shieldSymbol = new BufferedImage[1];
+	
 		
 		//Ammo UI sprites
 		ammoSymbol[0] = Game.uiSprite.getSprite(16*0, 16*3, 16, 16);
+		
+		//Shield UI Symbol
+		shieldSymbol[0] = Game.uiSprite.getSprite(16*1, 16*4, 16, 16);
 		
 		//Energy UI sprites
 		for(int i = 0; i < energySymbol.length;i ++) {
@@ -59,6 +60,15 @@ public class UI {
 		g.drawImage(ammoSymbol[0], 0, 19,null);
 		
 		
+		//Shield symbol
+		int i = 0 ;
+		//int horizontalShield = 10;
+		while(i< Game.player.shield) {
+			g.drawImage(shieldSymbol[0],60+(11*i), 4,null);
+			i++;
+		}
+
+	
 
 	}
 	
