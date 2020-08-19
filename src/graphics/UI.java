@@ -153,6 +153,8 @@ public class UI {
 		
 		if(Game.player.getAboveWeapon()) {
 			Sound.missingSignal.play();
+			
+			
 			g.setColor(new Color(24,20,37));
 			g.fillRect( playerXPostion  - 45,playerYPosition - 40, 40*scale, 10*scale);
 			
