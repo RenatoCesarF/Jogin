@@ -3,12 +3,18 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import graficos.Spritesheet;
-import graficos.UI;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.TargetDataLine;
+
+import graphics.Spritesheet;
+import graphics.UI;
 import main.Game;
+import main.Sound;
 import world.Camera;
 import world.World;
 
@@ -32,8 +38,12 @@ public class Player extends Entity{
 	public int shield = 0;
 	public int ammo = 0, maxAmmo = 40;
 	public int myWeapon = -1;
+	public int mana = 0, maxMana = 10;
 	
-	private boolean hasItem = false;
+
+	private boolean aboveWeapon = false;
+	public boolean confirm = false;
+	
 	private int damage = 0;
 	
 	private BufferedImage[] playerRight;
@@ -122,10 +132,12 @@ public class Player extends Entity{
 	public void playderDied() {
 		Game.entities.clear();
 		Game.item.clear();
+		Game.weapon.clear();
+		Game.enemies.clear();
 
 		Game.entities = new ArrayList<Entity>();
 		Game.item = new ArrayList<Entity>();
-
+		Game.weapon = new ArrayList<Entity>();
 		Game.enemies = new ArrayList<Enemy>();
 		
 		Game.itemsSprite = new Spritesheet("/itens.png"); //itens
@@ -154,45 +166,47 @@ public class Player extends Entity{
 					int getThisItem = Game.itemArray.get(itemIndex);
 					
 					switch(getThisItem) {
-						case 0: {// Medic kit
-							System.out.println("Get Medic kit");
+						case 0:// bag
+							addMaxAmmo();
+							System.out.println("get a bag");
 							Game.item.remove(singleEntity);
 							Game.itemArray.remove(itemIndex);
 							break;
-						}
-							
-						case 1:{// Ammo
+						
+						case 1:// Ammo
 							if(!isFullAmmmo()) {
+								addAmmo(10);
 								Game.item.remove(singleEntity);
 								Game.itemArray.remove(itemIndex);
 							}
 							else return;
 							break;
-						}
 						
-						case 2:{// shield
+						case 2:// shield
 							System.out.println("Get shield");
 							addShield();
 							Game.item.remove(singleEntity);
 							Game.itemArray.remove(itemIndex);
 							break;
-						}
 						
-						case 3: {
-							System.out.println("Get Mana potion");
-							Game.item.remove(singleEntity);
-							Game.itemArray.remove(itemIndex);
-							break;
-						}
+						case 3: 
+							if(!isFullMana()) {
+								addMana(2);
+								System.out.println("Get Mana potion");
+								Game.item.remove(singleEntity);
+								Game.itemArray.remove(itemIndex);
+								break;
+								
+							}
 						
-						case 4:{
+						case 4:
 							if(!isFullLife()) {
 								Game.item.remove(singleEntity);
 								Game.itemArray.remove(itemIndex);
 							}
 							else return;
 							break;
-						}
+						
 					
 					}
 					
@@ -202,112 +216,153 @@ public class Player extends Entity{
 	}
 
 	public boolean isFullLife() {
-		if(Game.player.life < Game.player.maxLife) {
-			addLife(1);
-			return false;
-		}
+		if(Game.player.life < Game.player.maxLife) return false;
+		else return true;
+	}
+	
+	public boolean isFullAmmmo(){
+		if(Game.player.ammo < Game.player.maxAmmo) return false;
+		else return true;
+	}
+	
+	public boolean isFullMana() {
+		if(Game.player.mana< Game.player.maxMana)return false;
 		else return true;
 	}
 	
 	public void addLife(int amount) {
-		Game.player.life +=1;
-	}
-	
-	public boolean isFullAmmmo(){
-		if(Game.player.ammo < Game.player.maxAmmo) {
-			this.addAmmmo(10);//We can change how manny ammo you get with a future variable
-			return false;
+		this.life +=1;
+		if(this.life > this.maxLife) {
+			this.life = this.maxLife;
 		}
-		else return true;
 	}
 	
-	public void addAmmmo(int amount) {
+	public void addMana(int amount){
+		this.mana += amount;
+		if(this.mana > this.maxMana) {
+			this.mana = this.maxMana;
+		}
+	}
+	
+	public void addAmmo(int amount) {
 		this.ammo += amount;
+		if(this.ammo > this.maxAmmo) {
+			this.ammo = this.maxAmmo;
+		}
+	}
+	public void addMaxAmmo() {
+		this.maxAmmo +=5;
 	}
 	
 	public void addShield() {
 		Game.player.shield ++;
 	}
+	
 	// ============= Weapon Stufs ============= \\
+
 	public void checkCollisionWithWeapons() {
 		for(int i = 0; i < Game.weapon.size(); i++) {
 			Entity singleEntity= Game.weapon.get(i);
 
 			if(singleEntity instanceof Consumable) {
-
-				if(Entity.isColidding(this, singleEntity)) {
 					
+				if(Entity.isColidding(this, singleEntity)) {
 					int weaponIndex =  Game.weapon.indexOf(singleEntity);
 					int getThisWeapon = Game.weaponArray.get(weaponIndex);
+				
 					
-					Game.weapon.remove(singleEntity);
-					Game.weaponArray.remove(weaponIndex);
 					
-					Game.player.getGun(getThisWeapon);
+					Thread delay = new Thread(new Runnable() {
+						public void run() {
+							setAboveWeapon(true);
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							setAboveWeapon(false);
+						}
+					});
 					
+					delay.start();
+					
+					if(this.confirm) {
+						Game.player.getGun(getThisWeapon);
+						Game.weapon.remove(singleEntity);
+						Game.weaponArray.remove(weaponIndex);
+						setAboveWeapon(false);					
+					}
 				}
 			}
 		}
 	}
 	
+	public boolean getAboveWeapon() {
+		return this.aboveWeapon;
+	}
+	public void setAboveWeapon(boolean set) {
+		this.aboveWeapon = set;
+	}
+	
 	public void getGun(int weaponIndex) {
 		
 		switch(weaponIndex) {
-			case 0:{ 
+			case 0: 
 				setWeapon(weaponIndex);
 				setDamage(1);
 				System.out.println("0");
 				break;
-			}
+			
 				
-			case 1:{
+			case 1:
 				setWeapon(weaponIndex);
 				setDamage(5);
 				System.out.println("1");
 				break;
-			}
 			
-			case 2: {
+			
+			case 2: 
 				setWeapon(weaponIndex);
 				setDamage(10);
 				System.out.println("2");
 				break;
-			}
 			
-			case 3: {
+			
+			case 3: 
 				setWeapon(weaponIndex);
 				setDamage(10);
 				System.out.println("3");
 				break;
-			}	
+				
 			
-			case 4:{
+			case 4:
 				setWeapon(weaponIndex);
 				setDamage(13);
 				System.out.println("4");
 				break;
-			}
 			
-			case 5: {
+			
+			case 5: 
 				setWeapon(weaponIndex);
 				setDamage(13);
 				System.out.println("5");
 				break;
-			}
 			
-			case 6: {
+			
+			case 6: 
 				setWeapon(weaponIndex);
 				setDamage(13);
 				System.out.println("6");
 				break;
-			}
 			
-			case 7: {
+			
+			case 7:
 				setWeapon(weaponIndex);
 				setDamage(20);
 				System.out.println("7");
 				break;
-			}
+			
 		}
 		
 		
@@ -324,6 +379,7 @@ public class Player extends Entity{
 	public int getPlayerWeapon() {
 		return Game.player.myWeapon;
 	}
+	
 	// ============= Frame Stufs ============== \\
 	public void tick(){
 		movedHorizontal = false;
@@ -370,6 +426,10 @@ public class Player extends Entity{
 		this.checkCollisionWithItem();
 		this.checkCollisionWithWeapons();
 		
+		
+		
+		
+		
 		//Controll the animation of get damage
 		if(isDamaged) {
 			Game.player.damagedFrames++;
@@ -382,9 +442,6 @@ public class Player extends Entity{
 		//Camera Follow the player
 		Camera.x =  Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH * 16 - Game.WIDTH);
 		Camera.y =  Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT * 16 - Game.HEIGHT);
-
-		
-
 	}
 	
 	public void render(Graphics g) {

@@ -49,12 +49,6 @@ public class World {
 						break;
 					}
 					
-					case 0XFF0008ff: {//player
-						
-						Game.player.setX(xx*16);
-						Game.player.setY(yy*16);
-						break;
-					}
 					
 					case 0xFFff00ea: {//Items
 						Random randomItem = new Random();
@@ -72,16 +66,23 @@ public class World {
 					case 0xFF00ff05:{//Weapons
 						
 						Random randomWeapon = new Random();
-						int weaponIndex = randomWeapon.nextInt(8);
+						int weaponIndex = randomWeapon.nextInt(9);
 						
 						Consumable Weapons = new Consumable(xx*16, yy*16, 16,16, Consumable.randomWeapon(weaponIndex));
-						//Weapons.setMask(3, 3, 13, 13);
+						Weapons.setMask(3, 3, 13, 13);
 						
 						Game.weaponArray.add(weaponIndex);
 						Game.weapon.add(Weapons);
 						break;
 					}
 				
+					case 0XFF0008ff: {//player
+						
+						Game.player.setX(xx*16);
+						Game.player.setY(yy*16);
+						break;
+					}
+					
 					case 0XFFFF0000: {//Enemy
 						Enemy en = new Enemy(xx*16, yy*16,16,16, Enemy.robot);
 						Game.entities.add(en);

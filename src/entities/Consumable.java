@@ -12,7 +12,7 @@ public class Consumable extends Entity{
 	//Random Weapons
 	public static BufferedImage randomWeapon(int weaponIndex) {
 
-		
+		//TODO change it to switch case
 		if(weaponIndex == 0) {
 			return armor1;
 		}
@@ -37,7 +37,9 @@ public class Consumable extends Entity{
 		if(weaponIndex == 7) {
 			return granade;
 		}
-		
+		if(weaponIndex == 8) {
+			return medicKit;
+		}
 		else return armor1;
 	
 	}
@@ -51,28 +53,29 @@ public class Consumable extends Entity{
 	public static BufferedImage katana = Game.itemsSprite.getSprite(16*5 , 0, 16, 16);
 	public static BufferedImage sword = Game.itemsSprite.getSprite(16*6 , 0, 16, 16);
 	public static BufferedImage granade = Game.itemsSprite.getSprite(16*7 , 0, 16, 16);
+	public static BufferedImage medicKit = Game.itemsSprite.getSprite(16*8, 0, 16, 16);
 	
 
 	
 	//=============== Random Itens =============
 	
 	//Loading to the game the sprites of itens
-	public static BufferedImage medKit = Game.itemsSprite.getSprite(16*0, 16, 16, 16);
-	public static BufferedImage ammo = Game.itemsSprite.getSprite(16*1, 16, 16, 16);
-	public static BufferedImage energy_C = Game.itemsSprite.getSprite(16*2, 16, 16, 16);
-	public static BufferedImage shild = Game.itemsSprite.getSprite(16*3, 16, 16, 16);
-	public static BufferedImage manapot = Game.itemsSprite.getSprite(16*4, 16, 16, 16);
+	public static BufferedImage bag = Game.itemsSprite.getSprite(17*0, 16*2, 16, 16);
+	public static BufferedImage ammo = Game.itemsSprite.getSprite(17*1, 16*1, 16, 16);
+	public static BufferedImage energy = Game.itemsSprite.getSprite(17*2, 16*1, 16, 16);
+	public static BufferedImage shild = Game.itemsSprite.getSprite(17*3, 16*1, 16, 16);
+	public static BufferedImage manapot = Game.itemsSprite.getSprite(17*4, 16*1, 16, 16);
 	
 
 
 	public static BufferedImage randomItem(int itemIndex) {
-		if(itemIndex == 0) return medKit;
+		if(itemIndex == 0) return bag;
 		if(itemIndex == 1) return ammo;
 		if(itemIndex == 2) return shild;
 		if(itemIndex == 3) return manapot;
-		if(itemIndex == 4) return energy_C;
+		if(itemIndex == 4) return energy;
 		
-		else return medKit;
+		else return ammo;
 	}
 
 	public Consumable(int x, int y, int width, int height, BufferedImage sprite) {

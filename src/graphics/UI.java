@@ -1,4 +1,4 @@
-package graficos;
+package graphics;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 
 import entities.Player;
 import main.Game;
+import main.Sound;
+import world.Camera;
 
 public class UI {
 	private BufferedImage[] energySymbol;
@@ -36,7 +38,7 @@ public class UI {
 		}
 		
 		//Weapons UI sprites
-		for(int i = 0; i < weaponSymbol.length; i++) {			          //frame,start, largura, algura 
+		for(int i = 0; i < weaponSymbol.length; i++) { //frame,start, largura, algura 
 			weaponSymbol[i] = Game.uiSprite.getSprite(16*i, 16*2, 16, 16);
 		}
 	}
@@ -72,7 +74,7 @@ public class UI {
 
 	}
 	
-	public void renderWeapon(Graphics g) {
+	public void weaponRender(Graphics g) {
 		int weaponIndex = Game.player.getPlayerWeapon();
 		
 		switch(weaponIndex) {
@@ -108,7 +110,7 @@ public class UI {
 	//This render function is to draw strings and HD things, the aboves ones is to draw pixeled things
 	public void render(Graphics g) {
 		//============= Player Life ==========\\
-		//BackGound color
+		//BackGround color
 		g.setColor(new Color(139,155,180));
 		g.fillRect(13*scale, 8*scale, ((int)(Game.player.maxLife))+45*scale, 8*scale);
 		
@@ -116,11 +118,25 @@ public class UI {
 		g.setColor(new Color(254, 174, 52));
 		g.fillRect(13*scale,8*scale, (int)((Game.player.life/Game.player.maxLife)*50*scale), 8*scale);
 		
-		//String of lifes
+		//String of life
 		g.setColor(new Color(58,68,102));
 		g.setFont(new Font("arial",Font.BOLD,8*scale));
 		g.drawString((int)Game.player.life+"/"+(int)Game.player.maxLife, 34*scale, 15*scale);
 		
+		
+		//=============Mana Stufs ============\\
+		//BackGround color
+		g.setColor(new Color(139,155,180));
+		g.fillRect(180*scale, 8*scale, ((int)(Game.player.maxMana))*4*scale, 8*scale);
+		
+		//Mana color
+		g.setColor(new Color(0,153,219));
+		g.fillRect(180*scale, 8*scale, ((int)(Game.player.mana))*4*scale, 8*scale);
+		
+		//String of Mana
+		g.setColor(new Color(58,68,102));
+		g.setFont(new Font("arial",Font.BOLD,8*scale));
+		g.drawString((int)Game.player.mana+"/"+(int)Game.player.maxMana, 194*scale, 15*scale);
 		
 		
 		//============== AMMO STUFS ==========\\
@@ -128,7 +144,29 @@ public class UI {
 		g.setFont(new Font("arial", Font.BOLD,7*5));
 		g.setColor(new Color(247,118,34));
 		g.drawString(Game.player.ammo+"/"+ Game.player.maxAmmo,63, 118);
+		
 
+		
+		//============== Weapon Mensage Stufs ==========\\
+		int playerXPostion = (Game.player.getX() - Camera.x)* scale;
+		int playerYPosition = (Game.player.getY() - Camera.y)* scale;
+		
+		if(Game.player.getAboveWeapon()) {
+			Sound.missingSignal.play();
+			g.setColor(new Color(24,20,37));
+			g.fillRect( playerXPostion  - 45,playerYPosition - 40, 40*scale, 10*scale);
+			
+			g.setFont(new Font("arial", Font.BOLD,5*scale));
+			g.setColor(new Color(192,203,220));
+			g.drawString("Press E to pick",playerXPostion -36, playerYPosition - 14);
+		}
+		
+	
+	
+		
 	}
+
+
+
 
 }

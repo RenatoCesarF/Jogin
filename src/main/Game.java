@@ -19,8 +19,8 @@ import javax.swing.JFrame;
 import entities.Enemy;
 import entities.Entity;
 import entities.Player;
-import graficos.Spritesheet;
-import graficos.UI;
+import graphics.Spritesheet;
+import graphics.UI;
 import world.World;
 
 public class Game extends Canvas implements Runnable, KeyListener {
@@ -63,6 +63,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public UI ui; 
 	
 	public Game() {
+		
 		
 		rand = new Random();
 		
@@ -173,8 +174,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		
 		/***/
-		ui.renderWeapon(g);
+		ui.weaponRender(g);
 		ui.symbolsRender(g);
+		
 		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
@@ -235,6 +237,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		else if(e.getKeyCode() == KeyEvent.VK_S) {
 			player.down = true;
 		}
+		
+       if(e.getKeyCode() == KeyEvent.VK_E) {
+            Game.player.confirm = true;
+       }
+	
 	}
 
 	@Override
@@ -256,13 +263,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			player.down = false;
 		}
 		
+		
+       if(e.getKeyCode() == KeyEvent.VK_E) {
+            Game.player.confirm = false;
+       }
+    
 
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_E) {
-			System.out.println("Interagir");
+			
 		}
 		if(e.getKeyCode() == KeyEvent.VK_Q) {
 			System.out.println("Trocar de arma");
