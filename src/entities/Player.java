@@ -96,6 +96,7 @@ public class Player extends Entity{
 	public void loseLife(int damage) {
 		if(Game.player.shield > 0) {
 			Game.player.shield --;
+			Sound.lostShield.play();
 		}else {			
 			Game.player.life -= damage;
 			Game.player.isDamaged = true;
@@ -168,13 +169,14 @@ public class Player extends Entity{
 					switch(getThisItem) {
 						case 0:// bag
 							addMaxAmmo();
-							System.out.println("get a bag");
+							Sound.getBag.play();
 							Game.item.remove(singleEntity);
 							Game.itemArray.remove(itemIndex);
 							break;
 						
 						case 1:// Ammo
 							if(!isFullAmmmo()) {
+								Sound.getAmmo.play();
 								addAmmo(10);
 								Game.item.remove(singleEntity);
 								Game.itemArray.remove(itemIndex);
@@ -183,7 +185,7 @@ public class Player extends Entity{
 							break;
 						
 						case 2:// shield
-							System.out.println("Get shield");
+							Sound.getShield.play();
 							addShield();
 							Game.item.remove(singleEntity);
 							Game.itemArray.remove(itemIndex);
@@ -191,6 +193,7 @@ public class Player extends Entity{
 						
 						case 3: 
 							if(!isFullMana()) {
+								Sound.swallow.play();
 								addMana(2);
 								System.out.println("Get Mana potion");
 								Game.item.remove(singleEntity);
@@ -250,6 +253,7 @@ public class Player extends Entity{
 			this.ammo = this.maxAmmo;
 		}
 	}
+	
 	public void addMaxAmmo() {
 		this.maxAmmo +=5;
 	}
@@ -281,6 +285,7 @@ public class Player extends Entity{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+						
 							setAboveWeapon(false);
 						}
 					});
@@ -309,6 +314,7 @@ public class Player extends Entity{
 		
 		switch(weaponIndex) {
 			case 0: 
+				Sound.getGun.play();
 				setWeapon(weaponIndex);
 				setDamage(1);
 				System.out.println("0");
@@ -316,6 +322,7 @@ public class Player extends Entity{
 			
 				
 			case 1:
+				Sound.getShotgun.play();
 				setWeapon(weaponIndex);
 				setDamage(5);
 				System.out.println("1");
@@ -330,6 +337,7 @@ public class Player extends Entity{
 			
 			
 			case 3: 
+				Sound.getBook.play();
 				setWeapon(weaponIndex);
 				setDamage(10);
 				System.out.println("3");
@@ -337,6 +345,7 @@ public class Player extends Entity{
 				
 			
 			case 4:
+				Sound.getBook.play();
 				setWeapon(weaponIndex);
 				setDamage(13);
 				System.out.println("4");
@@ -344,13 +353,15 @@ public class Player extends Entity{
 			
 			
 			case 5: 
+				Sound.getKatana.play();
 				setWeapon(weaponIndex);
 				setDamage(13);
 				System.out.println("5");
 				break;
 			
 			
-			case 6: 
+			case 6:
+				Sound.getSword.play();
 				setWeapon(weaponIndex);
 				setDamage(13);
 				System.out.println("6");

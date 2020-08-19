@@ -154,12 +154,12 @@ public class UI {
 		if(Game.player.getAboveWeapon()) {
 			Sound.missingSignal.play();
 			
-			
-			g.setColor(new Color(24,20,37));
-			g.fillRect( playerXPostion  - 45,playerYPosition - 40, 40*scale, 10*scale);
+			//TODO: particles system to this div
+			g.setColor(new Color(254, 174, 52));
+			g.fillRoundRect( playerXPostion  - 45,playerYPosition - 40, 40*scale, 10*scale,20,20);
 			
 			g.setFont(new Font("arial", Font.BOLD,5*scale));
-			g.setColor(new Color(192,203,220));
+			g.setColor(new Color(24,20,37));
 			g.drawString("Press E to pick",playerXPostion -36, playerYPosition - 14);
 		}
 		
