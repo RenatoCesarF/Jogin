@@ -110,10 +110,10 @@ public class UI {
 		int PlayerThrowable = Game.player.myThrowable;
 		
 		if(PlayerThrowable == 1) {
-			g.drawImage(weaponSymbol[7], 2, 50,null);
+			g.drawImage(weaponSymbol[7], 1, 50,null);
 		}
 		else if(PlayerThrowable == 2) {
-			g.drawImage(weaponSymbol[8], 2, 50,null);
+			g.drawImage(weaponSymbol[8], 1, 50,null);
 		}
 	}
 	

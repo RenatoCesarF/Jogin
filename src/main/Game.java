@@ -22,6 +22,8 @@ import entities.Player;
 import graphics.Spritesheet;
 import graphics.UI;
 import world.World;
+import entities.Throwable;
+
 
 public class Game extends Canvas implements Runnable, KeyListener {
 
@@ -39,6 +41,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static List<Enemy> enemies; 
 	
 	//List of items
+	public static List<Throwable> throwables; 
 	
 	public static List<Entity> item;
 	public static List<Integer> itemArray = new ArrayList<Integer>();
@@ -51,7 +54,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static Spritesheet itemsSprite;
 	public static Spritesheet worldSprite;
 	public static Spritesheet uiSprite;
-	
+	public static Spritesheet particlesSprite;
 
 	
 	public static World world;
@@ -62,9 +65,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	
 	public UI ui; 
 	
+	
 	public Game() {
 		
-		
+	
 		rand = new Random();
 		
 		addKeyListener(this);
@@ -81,10 +85,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		weapon = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
 		
+		throwables = new ArrayList<Throwable>();
+		
 		itemsSprite = new Spritesheet("/itens.png"); //itens
 		worldSprite = new Spritesheet("/tiles.png"); //tiles
 		playerSprite = new Spritesheet("/player.png"); //player
 		uiSprite = new Spritesheet("/UI.png");
+		particlesSprite = new Spritesheet("/particles.png");
 		
 		ui = new UI();
 		
@@ -138,6 +145,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 			e.tick();
 		}
+		
+		//Throwable rendering
+		for(int i = 0; i < throwables.size(); i++) {
+			throwables.get(i).tick();
+		}
 	} 
 	
 	public void render() {
@@ -153,11 +165,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		world.render(g);
 
 		
-		for(int i = 0; i< entities.size();i++) {
-			Entity e = entities.get(i);
-			e.render(g);
-		
-		}
+	
 
 		//Rendering the item sprite
 		for(int i = 0; i< item.size();i++) {
@@ -171,6 +179,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			e.render(g);
 		}
 		
+		//Throwable rendering
+		for(int i = 0; i < throwables.size(); i++) {
+			throwables.get(i).render(g);
+		}
+		
+		for(int i = 0; i< entities.size();i++) {
+			Entity e = entities.get(i);
+			e.render(g);
+		
+		}
 		
 		
 		/***/
@@ -238,11 +256,20 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		else if(e.getKeyCode() == KeyEvent.VK_S) {
 			player.down = true;
 		}
-		
-       if(e.getKeyCode() == KeyEvent.VK_E) {
-            Game.player.confirm = true;
-       }
 	
+		//If Player is confirming
+		if(e.getKeyCode() == KeyEvent.VK_E) {
+            Game.player.confirm = true;
+		}
+		
+		//TODO: make a delay to dont let the player throw many times
+		
+		//If player is Throwing something
+		if(e.getKeyCode() == KeyEvent.VK_Q) {
+            
+			Game.player.throwing = true;
+		}
+		
 	}
 
 	@Override
@@ -264,11 +291,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			player.down = false;
 		}
 		
-		
-       if(e.getKeyCode() == KeyEvent.VK_E) {
+		//Player stop to interact
+		if(e.getKeyCode() == KeyEvent.VK_E) {
             Game.player.confirm = false;
-       }
-    
+		}
+		
+		/*If player stop Throwing 
+		if(e.getKeyCode() == KeyEvent.VK_Q) {
+            Game.player.throwing = false;
+            
+		}*/
 
 	}
 

@@ -8,46 +8,43 @@ import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.TargetDataLine;
-
 import graphics.Spritesheet;
 import graphics.UI;
 import main.Game;
 import main.Sound;
 import world.Camera;
 import world.World;
+import entities.Throwable;
+
 
 public class Player extends Entity{
 	
 	private int maskX = 3, maskY = 3, maskW = 10, maskH = 10;
+	private int colidingArea = 16;
 	
-	public boolean right, up, left, down;
-	public double speed = 0.9;
-	
-	private int frames = 0,maxFrames = 6, indexHorizontal, indexVertical;
-	private int maxIndexHorizontal = 8, maxIndexVertical = 4;
-	private boolean movedHorizontal = false;
-	
+	//Check if player is damaged vars
 	public boolean isDamaged = false;
 	private int damagedFrames = 0;
 	
-	private int colidingArea = 16;
-	
+	//Player Status
 	public double life = 5, maxLife = 5;
-	public int shield = 0;
 	public int ammo = 0, maxAmmo = 40;
-	public int myWeapon = -1;
-	public int myThrowable = -1;
 	public int mana = 0, maxMana = 10;
+	public int shield = 0;
 	
-
+	public int myWeapon = -1;
+	private int damage = 0;
+	
+	
+	public int myThrowable = -1;
+	public int throwableDamage = 0;
+	public boolean throwing = false;
+	public Throwable throwable;
+	
 	private boolean aboveWeapon = false;
 	public boolean confirm = false;
 	
-	private int damage = 0;
-	public int throwableDamage = 0;
-	
+	//Player Sprites
 	private BufferedImage[] playerRight;
 	private BufferedImage[] playerLeft;
 	private BufferedImage[] playerUp;
@@ -55,6 +52,15 @@ public class Player extends Entity{
 	private BufferedImage[] playerStatic;
 	
 	private BufferedImage playerDameged;
+	
+	//Player Frame Controll
+	private int frames = 0,maxFrames = 6, indexHorizontal, indexVertical;
+	private int maxIndexHorizontal = 8, maxIndexVertical = 4;
+	private boolean movedHorizontal = false;
+	
+	public boolean right, up, left, down;
+	public double speed = 0.9;
+	
 	
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -247,6 +253,7 @@ public class Player extends Entity{
 		if(this.mana > this.maxMana) {
 			this.mana = this.maxMana;
 		}
+		
 	}
 	
 	public void addAmmo(int amount) {
@@ -322,7 +329,6 @@ public class Player extends Entity{
 				System.out.println("0");
 				break;
 			
-				
 			case 1:
 				Sound.getShotgun.play();
 				setWeapon(weaponIndex);
@@ -330,13 +336,11 @@ public class Player extends Entity{
 				System.out.println("1");
 				break;
 			
-			
 			case 2: 
 				setWeapon(weaponIndex);
 				setDamage(10);
 				System.out.println("2");
 				break;
-			
 			
 			case 3: 
 				Sound.getBook.play();
@@ -371,13 +375,15 @@ public class Player extends Entity{
 			
 			
 			case 7:
-				this.myThrowable = 1;
+				Sound.getMedKit.play();
+				this.myThrowable = 2;
 				this.throwableDamage = 10;
 				setDamage(20);
 				System.out.println("7");
 				break;
 			case 8:
-				this.myThrowable = 2;
+				Sound.getMedKit.play();
+				this.myThrowable = 1;
 				this.throwableDamage = 5;
 				System.out.println("8");
 				break;
@@ -401,6 +407,9 @@ public class Player extends Entity{
 	
 	// ============= Frame Stufs ============== \\
 	public void tick(){
+		
+		// Player Movement Check 
+		
 		movedHorizontal = false;
 		if(up && World.isFree(this.getX(), (int)(y-speed))){
 			y -= speed;
@@ -441,11 +450,10 @@ public class Player extends Entity{
 			}
 		}
 		
+		
 		//Checking the collision
 		this.checkCollisionWithItem();
 		this.checkCollisionWithWeapons();
-		
-		
 		
 		
 		
@@ -458,9 +466,48 @@ public class Player extends Entity{
 			}
 		}
 		
+		
+		//Controlling if player is throwing
+		if(this.throwing && myThrowable > 0) {
+			int throwableXDirection = 0;
+			int throwableYDirection = 0;
+			
+			this.throwing = false;
+			
+			//Check the direction of the player
+			if(this.right) {
+				throwableXDirection = 1;
+			}
+			else if(this.left) {
+				throwableXDirection = -1;
+			}
+			if(this.up) {
+				throwableYDirection = -1;
+			}
+			else if(this.down) {
+				throwableYDirection = 1;
+			}
+			
+			
+			
+			Throwable throwable = new Throwable(
+					this.getX(),
+					this.getY(),
+					16,16,
+					null,
+					throwableXDirection,
+					throwableYDirection
+			);
+			
+			Game.throwables.add(throwable);
+			
+		}
+		
+		
 		//Camera Follow the player
 		Camera.x =  Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH * 16 - Game.WIDTH);
 		Camera.y =  Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT * 16 - Game.HEIGHT);
+		
 	}
 	
 	public void render(Graphics g) {

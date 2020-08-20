@@ -1,4 +1,4 @@
-package entities;
+ package entities;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -60,11 +60,11 @@ public class Consumable extends Entity{
 	//=============== Random Itens =============
 	
 	//Loading to the game the sprites of itens
-	public static BufferedImage bag = Game.itemsSprite.getSprite(17*0, 16*2, 16, 16);
-	public static BufferedImage ammo = Game.itemsSprite.getSprite(17*1, 16*1, 16, 16);
-	public static BufferedImage energy = Game.itemsSprite.getSprite(17*2, 16*1, 16, 16);
-	public static BufferedImage shild = Game.itemsSprite.getSprite(17*3, 16*1, 16, 16);
-	public static BufferedImage manapot = Game.itemsSprite.getSprite(17*4, 16*1, 16, 16);
+	public static BufferedImage bag = Game.itemsSprite.getSprite(16*0, 16*2, 16, 16);
+	public static BufferedImage ammo = Game.itemsSprite.getSprite(16*1, 16*1, 16, 16);
+	public static BufferedImage energy = Game.itemsSprite.getSprite(16*2, 16*1, 16, 16);
+	public static BufferedImage shild = Game.itemsSprite.getSprite(16*3, 16*1, 16, 16);
+	public static BufferedImage manapot = Game.itemsSprite.getSprite(16*4, 16*1, 16, 16);
 	
 
 
