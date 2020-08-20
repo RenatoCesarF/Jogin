@@ -21,7 +21,7 @@ public class UI {
 
 	public UI() {
 		energySymbol = new BufferedImage[4];
-		weaponSymbol = new BufferedImage[8];
+		weaponSymbol = new BufferedImage[10];
 		ammoSymbol = new BufferedImage[1];
 		shieldSymbol = new BufferedImage[1];
 	
@@ -100,11 +100,21 @@ public class UI {
 		case 6:
 			g.drawImage(weaponSymbol[weaponIndex], 3, 35,null);
 			break;
-		case 7:
-			g.drawImage(weaponSymbol[weaponIndex], 0, 33,null);
-			break;
 		}
 			
+	
+		
+	}
+	
+	public void throwableRender(Graphics g) {
+		int PlayerThrowable = Game.player.myThrowable;
+		
+		if(PlayerThrowable == 1) {
+			g.drawImage(weaponSymbol[7], 2, 50,null);
+		}
+		else if(PlayerThrowable == 2) {
+			g.drawImage(weaponSymbol[8], 2, 50,null);
+		}
 	}
 	
 	//This render function is to draw strings and HD things, the aboves ones is to draw pixeled things

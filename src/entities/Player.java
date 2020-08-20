@@ -38,6 +38,7 @@ public class Player extends Entity{
 	public int shield = 0;
 	public int ammo = 0, maxAmmo = 40;
 	public int myWeapon = -1;
+	public int myThrowable = -1;
 	public int mana = 0, maxMana = 10;
 	
 
@@ -45,6 +46,7 @@ public class Player extends Entity{
 	public boolean confirm = false;
 	
 	private int damage = 0;
+	public int throwableDamage = 0;
 	
 	private BufferedImage[] playerRight;
 	private BufferedImage[] playerLeft;
@@ -282,7 +284,7 @@ public class Player extends Entity{
 							try {
 								Thread.sleep(1000);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 						
@@ -369,9 +371,15 @@ public class Player extends Entity{
 			
 			
 			case 7:
-				setWeapon(weaponIndex);
+				this.myThrowable = 1;
+				this.throwableDamage = 10;
 				setDamage(20);
 				System.out.println("7");
+				break;
+			case 8:
+				this.myThrowable = 2;
+				this.throwableDamage = 5;
+				System.out.println("8");
 				break;
 			
 		}

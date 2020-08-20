@@ -175,6 +175,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		/***/
 		ui.weaponRender(g);
+		ui.throwableRender(g);
 		ui.symbolsRender(g);
 		
 		g.dispose();
