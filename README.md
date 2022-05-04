@@ -35,15 +35,11 @@ The color pallet: endesga-32
 
 
 ### 🌌Some interesting things
-- All the floor, and future all the map, are genereted randomly
-- ...
 
 
 ### 🔮Future implementations ...
 
-### 🖥️Let's see some prints
+### 🖥️Let's see some images
 
 ![Sem título](https://user-images.githubusercontent.com/62253156/90515590-de270380-e130-11ea-8b25-c329f4d156c9.png)
 
-
-## If you want to make a better logo to me I will a appreciate this, the photoshop project are in the files 
