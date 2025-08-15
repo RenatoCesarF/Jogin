@@ -1,25 +1,26 @@
 package graphics;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
 
-import java.io.IOException;
-
 public class Spritesheet {
-	
-	private BufferedImage spritesheet;
-	
-	public Spritesheet(String path) {
-		
-		try {
-			spritesheet = ImageIO.read(getClass().getResource(path));
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public BufferedImage getSprite(int x, int y, int width, int height){
-		return spritesheet.getSubimage(x, y, width, height);
-	} 
+
+  private final BufferedImage spritesheet;
+
+  public Spritesheet(String path) {
+    try (InputStream is = getClass().getResourceAsStream(path)) {
+      if (is == null) {
+        throw new IOException("Resource not found: " + path);
+      }
+      spritesheet = ImageIO.read(is);
+    } catch (IOException e) {
+      throw new RuntimeException("Failed to load spritesheet: " + path, e);
+    }
+  }
+
+  public BufferedImage getSprite(int x, int y, int width, int height) {
+    return spritesheet.getSubimage(x, y, width, height);
+  }
 }
